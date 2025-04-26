@@ -3,47 +3,49 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    /* Bakgrunnsgradient */
     background: linear-gradient(135deg, #6dd5ed, #2193b0);
     color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Tillat scrolling om nødvendig */
     overflow-x: hidden;
 }
 /* === 1: GENERELT SLUTT === */
 
 /* === 2: FANER START === */
 .tab-container {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px; /* Økt margin */
+    margin-bottom: 15px; /* Økt margin */
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 5px;
-    border-radius: 10px;
+    padding: 6px; /* Litt mer padding */
+    border-radius: 12px; /* Mer avrundet */
     display: inline-block;
 }
 
 .tab-button {
-    padding: 10px 20px;
+    padding: 10px 22px; /* Justert padding */
     border: none;
     border-radius: 8px;
     cursor: pointer;
     background-color: transparent;
-    color: #f0f0f0;
-    font-size: 1em;
-    font-weight: bold;
-    margin: 0 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    color: rgba(255, 255, 255, 0.8); /* Litt nedtonet inaktiv farge */
+    font-size: 1.05em; /* Litt større font */
+    font-weight: 600; /* Litt tykkere */
+    margin: 0 4px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tab-button.active {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #2c3e50;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Helt hvit aktiv bakgrunn */
+    color: #2980b9; /* Mørkere blå aktiv tekst */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Tydeligere skygge */
 }
 
 .tab-button:not(.active):hover {
      background-color: rgba(255, 255, 255, 0.4);
+     color: #ffffff; /* Lysere ved hover */
 }
 
 .tab-content {
@@ -51,6 +53,8 @@ body {
     width: 100%;
     flex-direction: column;
     align-items: center;
+    padding: 0 10px; /* Legg til litt padding på sidene for innhold */
+    box-sizing: border-box;
 }
 
 .tab-content.active {
@@ -60,38 +64,38 @@ body {
 
 /* === 3: FELLES STILER (.controls etc.) START === */
 .controls {
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 20px 25px;
+    background-color: rgba(255, 255, 255, 0.9); /* Litt mindre transparent */
+    padding: 20px 30px; /* Økt padding */
     border-radius: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Justert skygge */
     width: 90%;
-    max-width: 800px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 850px; /* Litt bredere maks */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Synligere kant */
     box-sizing: border-box;
 }
 
 .controls h1 {
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.8em;
+    margin-bottom: 25px; /* Mer luft */
+    font-size: 2em; /* Større */
     color: #2c3e50;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     text-align: center;
 }
 
 .control-row {
-    margin-bottom: 12px;
+    margin-bottom: 15px; /* Mer luft mellom rader */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 10px 15px;
+    gap: 12px 18px; /* Litt større gap */
 }
 
 .control-row label {
     font-weight: 600;
-    margin-right: 5px;
+    margin-right: 6px;
     flex-shrink: 0;
     color: #34495e;
 }
@@ -102,35 +106,35 @@ body {
 .controls button,
 .controls input[type="range"],
 .controls input[type="checkbox"] {
-    padding: 9px 14px;
+    padding: 10px 15px; /* Økt padding */
     border: 1px solid #bdc3c7;
     border-radius: 8px;
     font-size: 1em;
     vertical-align: middle;
     background-color: #fff;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Justert skygge */
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .controls input[type="text"]{
     flex-grow: 1;
-    min-width: 100px;
+    min-width: 120px; /* Litt større min */
 }
 
 .controls select:focus,
 .controls input:not([type="checkbox"]):not([type="range"]):focus {
     border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Endret fokus-stil */
     outline: none;
 }
 .controls input[type="range"]:focus{
      outline: none;
-     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
-.controls select { min-width: 160px; cursor: pointer; }
-.controls input[type="number"] { width: 75px; text-align: right; }
-.controls input[type="range"] { cursor: pointer; padding: 0; width: 130px; accent-color: #2980b9; }
-.controls input[type="checkbox"] { cursor: pointer; margin-right: 5px; transform: scale(1.3); padding: 0; accent-color: #2980b9; }
+.controls select { min-width: 180px; cursor: pointer; }
+.controls input[type="number"] { width: 80px; text-align: right; }
+.controls input[type="range"] { cursor: pointer; padding: 0; width: 140px; accent-color: #3498db; vertical-align: middle; height: 20px; /* Bedre vertikal justering */}
+.controls input[type="checkbox"] { cursor: pointer; margin-right: 6px; transform: scale(1.3); padding: 0; accent-color: #3498db; width: 16px; height: 16px; /* Eksplisitt størrelse */ }
 
 .mute-label,
 .controls label:has(> input[type="checkbox"]) {
@@ -148,16 +152,26 @@ body {
     border: none;
     font-weight: bold;
     padding: 10px 20px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Standard skygge */
 }
 
 .controls button:hover:not(:disabled) {
     background-color: #2980b9;
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Økt skygge ved hover */
 }
-.controls button:active:not(:disabled) { transform: translateY(0px); }
-.controls button:disabled { background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.7; } /* La til opacity */
+.controls button:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Mindre skygge ved aktiv */
+}
+.controls button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+}
 /* === 3: FELLES STILER SLUTT === */
 
 
@@ -177,21 +191,21 @@ body {
 
 .game-area {
     width: 90%;
-    max-width: 800px;
+    max-width: 850px; /* Matcher controls */
     flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4); /* Litt mørkere */
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.3), 0 6px 20px rgba(0, 0, 0, 0.25); /* Innover og utover skygge */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 12px; /* Justert radius */
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 25px; /* Mer luft nederst */
 }
 
-#gameCanvas { display: block; background-color: transparent; }
+#gameCanvas { display: block; background-color: transparent; width: 100%; height: 100%; } /* Sørg for at den fyller */
 /* === 4: AVSPILLINGSFANE STILER SLUTT === */
 
 
@@ -202,11 +216,11 @@ body {
 
 .record-piano-area {
     width: 90%;
-    max-width: 800px;
+    max-width: 850px; /* Matcher controls */
     margin-bottom: 20px;
     background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px; /* Justert radius */
+    padding: 15px; /* Økt padding */
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -214,39 +228,42 @@ body {
 #recordPianoCanvas {
     display: block;
     width: 100%;
-    height: 150px; /* Høyde satt via JS konstant også */
+    height: 150px;
     background-color: #444;
-    border-radius: 5px;
-    cursor: pointer; /* Indikerer klikkbarhet */
+    border-radius: 8px; /* Justert radius */
+    cursor: pointer;
 }
 
-.json-output-area {
+.json-output-area { /* Bruker .controls som base, så arver styling */
      margin-top: 0;
 }
 
 #jsonOutput {
     width: 100%;
     box-sizing: border-box;
-    font-family: monospace;
-    font-size: 0.9em;
+    font-family: 'Courier New', Courier, monospace; /* Tydelig monospace */
+    font-size: 0.95em; /* Litt større */
+    line-height: 1.4; /* Bedre lesbarhet */
     border-radius: 8px;
     border: 1px solid #bdc3c7;
-    background-color: #fdfdfd;
-    color: #333;
-    padding: 10px;
+    background-color: #eef1f2; /* Lys grå bakgrunn */
+    color: #2c3e50; /* Mørk tekst */
+    padding: 15px; /* Mer padding */
     resize: vertical;
-    margin-bottom: 10px;
-    min-height: 100px; /* Minimumshøyde */
+    margin-bottom: 15px; /* Mer luft */
+    min-height: 120px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); /* Innover-skygge */
 }
 #copyJsonButton{
-    background-color: #2ecc71;
+    background-color: #2ecc71; /* Grønn knapp */
+    padding: 10px 25px; /* Større knapp */
 }
 #copyJsonButton:hover:not(:disabled){
      background-color: #27ae60;
 }
 
 #stepModeControls button:disabled {
-    background-color: #ecf0f1; /* Lysere grå for inaktiv add */
+    background-color: #ecf0f1;
     color: #bdc3c7;
     opacity: 0.8;
 }
