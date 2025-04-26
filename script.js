@@ -11,6 +11,7 @@ const ctx = canvas.getContext('2d'); // Context for å tegne på canvas
 // Nøkkelen er filnavnet i 'songs/'-mappen, verdien er visningsnavnet i dropdown.
 const availableSongs = {
     "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
+    "pink_panther_melody.json": "Pink Panther (Melody)" // <-- Ny sang lagt til
     // Legg til flere sanger her etterhvert, f.eks.:
     // "mary_had_a_little_lamb.json": "Mary Had a Little Lamb"
 };
