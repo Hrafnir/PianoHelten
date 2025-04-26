@@ -40,6 +40,6 @@
     { "key": "E4", "time": 13, "duration": 0.5 },
     { "key": "G#4", "time": 13.5, "duration": 0.5 },
     { "key": "E4", "time": 14, "duration": 2 }
-    // Slutter på beat 16
+ 
   ]
 }
