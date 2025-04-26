@@ -1,0 +1,63 @@
+/* === 1: GENERELT START === */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column; /* Organiserer elementene vertikalt */
+    align-items: center; /* Sentrerer innholdet horisontalt */
+    height: 100vh; /* Bruker hele vindushøyden */
+    overflow: hidden; /* Unngå scrollbars pga. full høyde */
+}
+/* === 1: GENERELT SLUTT === */
+
+/* === 2: KONTROLLPANEL STYLING START === */
+.controls {
+    background-color: #ddd;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 800px; /* Begrens bredden på kontrollpanelet */
+}
+
+.controls button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.controls input[type="file"] {
+    padding: 5px;
+}
+
+#songInfo {
+    margin-top: 10px;
+    font-style: italic;
+    color: #333;
+}
+/* === 2: KONTROLLPANEL STYLING SLUTT === */
+
+/* === 3: SPILLOMRÅDE STYLING START === */
+.game-area {
+    width: 90%; /* Tar opp mesteparten av bredden */
+    max-width: 800px; /* Men ikke mer enn 800px */
+    flex-grow: 1; /* Tar opp tilgjengelig vertikal plass */
+    background-color: #222; /* Mørk bakgrunn for spillområdet */
+    border: 1px solid #444;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative; /* Nødvendig for absolutt posisjonering av canvas */
+    display: flex; /* Bruk flex for å sentrere canvas */
+    justify-content: center;
+    align-items: center;
+}
+
+#gameCanvas {
+    display: block; /* Fjerner ekstra plass under canvas */
+    background-color: #333; /* Egen bakgrunn for selve canvasen */
+    /* Bredde og høyde settes av JavaScript for å matche container */
+}
+/* === 3: SPILLOMRÅDE STYLING SLUTT === */
