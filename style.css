@@ -1,112 +1,181 @@
 /* === 1: GENERELT START === */
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Litt mer moderne font */
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    /* Kul gradientbakgrunn */
+    background: linear-gradient(135deg, #6dd5ed, #2193b0);
+    color: #333; /* Mørkere tekst for kontrast */
     display: flex;
-    flex-direction: column; /* Organiserer elementene vertikalt */
-    align-items: center; /* Sentrerer innholdet horisontalt */
-    height: 100vh; /* Bruker hele vindushøyden */
-    overflow: hidden; /* Unngå scrollbars pga. full høyde */
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 /* === 1: GENERELT SLUTT === */
 
 /* === 2: KONTROLLPANEL STYLING START === */
 .controls {
-    background-color: #ddd;
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.85); /* Halv-transparent hvit */
+    padding: 20px 25px;
+    border-radius: 15px; /* Mer avrundet */
+    margin-top: 15px; /* Litt luft på toppen */
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Tydeligere skygge */
     width: 90%;
-    max-width: 800px; /* Begrens bredden på kontrollpanelet */
+    max-width: 800px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtil kant */
 }
 
 .controls h1 {
     margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-size: 1.8em; /* Større tittel */
+    color: #2c3e50; /* Mørk blågrå farge */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Liten skygge */
 }
 
 .control-row {
-    margin-bottom: 10px;
-    display: flex; /* Bruker flexbox for å justere elementer på raden */
-    justify-content: center; /* Sentrerer elementene i raden */
-    align-items: center; /* Justerer elementene vertikalt */
-    gap: 10px; /* Mellomrom mellom elementer på raden */
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 15px;
 }
 
 .control-row label {
-    font-weight: bold;
-    margin-right: 5px; /* Litt plass før input/select */
-    flex-shrink: 0; /* Forhindrer at labelen krymper */
+    font-weight: 600; /* Litt tykkere */
+    margin-right: 5px;
+    flex-shrink: 0;
+    color: #34495e; /* Litt mørkere label-farge */
 }
 
 .controls select,
 .controls input[type="number"],
-.controls button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.controls button,
+.controls input[type="range"],
+.controls input[type="checkbox"] {
+    padding: 9px 14px; /* Litt mer padding */
+    border: 1px solid #bdc3c7; /* Lys grå kant */
+    border-radius: 8px; /* Mer avrunding */
     font-size: 1em;
+    vertical-align: middle;
+    background-color: #fff; /* Hvit bakgrunn */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* Liten innover-skygge */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Pen overgang */
 }
 
+.controls select:focus,
+.controls input[type="number"]:focus,
+.controls input[type="range"]:focus {
+    border-color: #3498db; /* Blå kant ved fokus */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Blå skygge ved fokus */
+    outline: none; /* Fjerner standard outline */
+}
+
+
 .controls select {
-    min-width: 150px; /* Gir select-boksen litt bredde */
+    min-width: 180px; /* Litt bredere */
     cursor: pointer;
 }
 
 .controls input[type="number"] {
-    width: 70px; /* Passe bredde for BPM-tall */
+    width: 75px;
     text-align: right;
+}
+
+.controls input[type="range"] {
+    cursor: pointer;
+    padding: 0;
+    width: 130px;
+    accent-color: #2980b9; /* Farge på slider-sporet */
+}
+
+.controls input[type="checkbox"] {
+     cursor: pointer;
+     margin-right: 5px;
+     transform: scale(1.3); /* Enda litt større */
+     padding: 0;
+     accent-color: #2980b9; /* Farge på checkbox */
+}
+
+.mute-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+    color: #34495e;
 }
 
 .controls button {
     cursor: pointer;
-    background-color: #4CAF50; /* Grønn farge */
+    background-color: #3498db; /* Blå primærfarge */
     color: white;
     border: none;
+    font-weight: bold; /* Tykkere tekst */
+    padding: 10px 20px; /* Større knapp */
+    transition: background-color 0.2s ease, transform 0.1s ease; /* Myke overganger */
 }
 
+.controls button:hover:not(:disabled) {
+    background-color: #2980b9; /* Mørkere blå ved hover */
+    transform: translateY(-1px); /* Liten "løft"-effekt */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.controls button:active:not(:disabled) {
+     transform: translateY(0px); /* Tilbake ned ved klikk */
+}
+
+
 .controls button:disabled {
-    background-color: #ccc;
+    background-color: #bdc3c7; /* Grå når deaktivert */
     cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
 }
 
 #songInfo {
-    margin-top: 5px;
-    font-style: italic;
-    color: #333;
-    min-height: 1.2em; /* Sikrer at layout ikke hopper når tekst endres */
-    text-align: center; /* Sentrerer status-teksten */
-    width: 100%; /* Tar opp hele bredden i sin rad */
+    font-style: normal; /* Ikke kursiv lenger */
+    color: #7f8c8d; /* Mykere gråfarge */
+    width: 100%;
+    text-align: center;
+    min-height: 1.2em;
+    margin-top: 8px;
+    order: 99;
 }
 
 #originalBpm {
     font-size: 0.9em;
-    color: #555;
+    color: #7f8c8d;
+}
+
+.audio-controls {
+    border: none; /* Fjerner skillelinje */
+    padding-top: 5px;
 }
 /* === 2: KONTROLLPANEL STYLING SLUTT === */
 
 /* === 3: SPILLOMRÅDE STYLING START === */
 .game-area {
-    width: 90%; /* Tar opp mesteparten av bredden */
-    max-width: 800px; /* Men ikke mer enn 800px */
-    flex-grow: 1; /* Tar opp tilgjengelig vertikal plass */
-    background-color: #222; /* Mørk bakgrunn for spillområdet */
-    border: 1px solid #444;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    position: relative; /* Nødvendig for absolutt posisjonering av canvas */
-    display: flex; /* Bruk flex for å sentrere canvas */
+    width: 90%;
+    max-width: 800px;
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.3); /* Mørkere, halv-transparent bakgrunn */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Veldig subtil kant */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); /* Tydeligere skygge */
+    position: relative;
+    display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px; /* Avrundede hjørner */
+    overflow: hidden; /* Sikrer at canvas ikke går utenfor */
 }
 
 #gameCanvas {
-    display: block; /* Fjerner ekstra plass under canvas */
-    background-color: #333; /* Egen bakgrunn for selve canvasen */
-    /* Bredde og høyde settes av JavaScript for å matche container */
+    display: block;
+    background-color: transparent; /* Gjennomsiktig canvas, lar .game-area skinne gjennom */
+    /* Bredde og høyde settes av JavaScript */
 }
 /* === 3: SPILLOMRÅDE STYLING SLUTT === */
