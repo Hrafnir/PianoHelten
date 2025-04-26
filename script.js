@@ -247,8 +247,64 @@ function gameLoop() {
 // === 7: ANIMASJONSLØKKE SLUTT ===
 
 // === 8: TEGNE FALLENDE NOTER START ===
-// ... (ingen endringer her) ...
-function drawFallingNotes(currentBeat) { if (!currentSong || !currentSong.notes || Object.keys(keyMapping).length === 0) return; const secondsPerBeat = 60 / currentPlaybackBPM; const fallHeight = canvas.height - pianoHeight; const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS; const pixelsPerBeat = pixelsPerSecond * secondsPerBeat; const targetLineY = canvas.height - pianoHeight; currentSong.notes.forEach(note => { const keyData = keyMapping[note.key]; if (!keyData) return; const noteStartTime = note.time; const noteEndTime = note.time + note.duration; if (currentBeat >= noteStartTime && currentBeat < noteEndTime) { activeKeys.add(note.key); } const targetBeat = note.time; const beatsUntilHit = targetBeat - currentBeat; const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat); const notePixelHeight = note.duration * pixelsPerBeat; const yTop = yBottom - notePixelHeight; const xPosition = keyData.x; const noteWidth = keyData.width; if (yTop < canvas.height && yBottom > 0) { ctx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR; ctx.fillRect(xPosition, yTop, noteWidth, notePixelHeight); ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xPosition, yBottom); ctx.lineTo(xPosition + noteWidth, yBottom); ctx.stroke(); } }); }
+function drawFallingNotes(currentBeat) {
+    if (!currentSong || !currentSong.notes || Object.keys(keyMapping).length === 0) return;
+
+    const secondsPerBeat = 60 / currentPlaybackBPM;
+    const fallHeight = canvas.height - pianoHeight;
+    const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS;
+    const pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+    const targetLineY = canvas.height - pianoHeight;
+
+    currentSong.notes.forEach(note => {
+        const keyData = keyMapping[note.key];
+        if (!keyData) return;
+
+        const noteStartTime = note.time;
+        const noteEndTime = note.time + note.duration;
+
+        if (currentBeat >= noteStartTime && currentBeat < noteEndTime) {
+            activeKeys.add(note.key);
+        }
+
+        const targetBeat = note.time;
+        const beatsUntilHit = targetBeat - currentBeat;
+        const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat);
+        const notePixelHeight = Math.max(1, note.duration * pixelsPerBeat); // Sørg for minst 1px høyde
+        const yTop = yBottom - notePixelHeight;
+        const xPosition = keyData.x;
+        const noteWidth = keyData.width;
+
+        // Tegn noten hvis den er synlig
+        if (yTop < canvas.height && yBottom > 0) {
+            ctx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR;
+            ctx.strokeStyle = NOTE_BORDER_COLOR; // Kantlinjefarge
+            ctx.lineWidth = 1; // Kantlinjetykkelse
+
+            // *** Tegn med avrundede hjørner ***
+            ctx.beginPath();
+            // Bruker ctx.roundRect hvis tilgjengelig (moderne nettlesere)
+            if (ctx.roundRect) {
+                 ctx.roundRect(xPosition, yTop, noteWidth, notePixelHeight, NOTE_CORNER_RADIUS);
+            } else {
+                // Fallback for eldre nettlesere (vanlig rektangel)
+                 ctx.rect(xPosition, yTop, noteWidth, notePixelHeight);
+            }
+            ctx.fill(); // Fyll fargen
+            ctx.stroke(); // Tegn kantlinjen
+
+            // Tegn "trefflinje" separat hvis ønskelig (kan fjernes for renere look)
+            /*
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(xPosition, yBottom);
+            ctx.lineTo(xPosition + noteWidth, yBottom);
+            ctx.stroke();
+            */
+        }
+    });
+}
 // === 8: TEGNE FALLENDE NOTER SLUTT ===
 
 // === 9: START PROGRAMMET START ===
