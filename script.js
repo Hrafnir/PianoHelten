@@ -7,25 +7,24 @@ const songInfoDiv = document.getElementById('songInfo');
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d'); // Context for å tegne på canvas
 
-// --- Sangliste (Manuelt vedlikeholdt) ---
-// Nøkkelen er filnavnet i 'songs/'-mappen, verdien er visningsnavnet i dropdown.
 const availableSongs = {
     "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
-    "pink_panther_melody.json": "Pink Panther (Melody)" // <-- Ny sang lagt til
-    // Legg til flere sanger her etterhvert, f.eks.:
-    // "mary_had_a_little_lamb.json": "Mary Had a Little Lamb"
+    "pink_panther_melody.json": "Pink Panther (Melody)"
+    // Legg til flere sanger her etterhvert
 };
-const songsFolderPath = 'songs/'; // Mappen der sangfilene ligger
+const songsFolderPath = 'songs/';
 
-let currentSong = null; // Holder dataen til den lastede sangen
-let currentPlaybackBPM = 100; // BPM som faktisk brukes til avspilling
-let audioContext = null; // For fremtidig lydavspilling (ikke brukt nå)
+let currentSong = null;
+let currentPlaybackBPM = 100;
+let audioContext = null;
 let isPlaying = false;
-let animationFrameId = null; // Holder ID for requestAnimationFrame
-let startTime = 0; // Tidspunktet da beat 0 *skal treffe* bunnen (inkluderer pre-roll)
+let animationFrameId = null;
+let startTime = 0;
+let activeKeys = new Set(); // *** NY: Holder styr på tangenter som skal lyse opp ***
+const NOTE_HIT_TOLERANCE_BEATS = 0.1; // *** NY: Hvor nærme noten må være for å lyse opp tangenten (i beats) ***
 
 // Piano-konstanter
-const keyInfo = [ // Definerer tangenter vi vil vise
+const keyInfo = [
     { name: "C4", type: "white", xOffset: 0 }, { name: "C#4", type: "black", xOffset: 0.7 },
     { name: "D4", type: "white", xOffset: 1 }, { name: "D#4", type: "black", xOffset: 1.7 },
     { name: "E4", type: "white", xOffset: 2 },
@@ -40,28 +39,34 @@ const keyInfo = [ // Definerer tangenter vi vil vise
     { name: "G5", type: "white", xOffset: 11 }, { name: "G#5", type: "black", xOffset: 11.7 },
     { name: "A5", type: "white", xOffset: 12 }, { name: "A#5", type: "black", xOffset: 12.7 },
     { name: "B5", type: "white", xOffset: 13 },
-    { name: "C6", type: "white", xOffset: 14 } // Ekstra C for visuell avslutning
+    { name: "C6", type: "white", xOffset: 14 }
 ];
 const pianoHeight = 120;
 const whiteKeyWidth = 40;
 const blackKeyWidth = whiteKeyWidth * 0.6;
 const blackKeyHeight = pianoHeight * 0.6;
-const keyMapping = {}; // Objekt for å raskt finne x-posisjon basert på nøkkelnavn
+const keyMapping = {};
 
 // Spill-konstanter
 const PRE_ROLL_SECONDS = 3;
 const NOTE_FALL_SECONDS = 6;
+const KEY_HIGHLIGHT_COLOR = 'rgba(255, 255, 0, 0.6)'; // Gul highlight
+const WHITE_NOTE_COLOR = 'cyan';
+const BLACK_NOTE_COLOR = 'magenta';
+const KEY_NAME_FONT = '11px sans-serif';
+const KEY_NAME_COLOR_WHITE = 'black';
+const KEY_NAME_COLOR_BLACK = 'white';
 // === 1: GLOBALE VARIABLER OG KONSTANTER SLUTT ===
 
 // === 2: INITIALISERING START ===
 function initialize() {
     console.log("Initialiserer Piano Hero...");
     setupCanvas();
-    buildKeyMapping(); // Bygg mappingen FØR første drawPiano
-    drawPiano(); // Tegn pianoet med en gang
-    populateSongSelector(); // Fyll dropdown-menyen
+    buildKeyMapping();
+    drawPiano(); // Tegn pianoet med en gang (inkl. navn)
+    populateSongSelector();
     setupEventListeners();
-    resetUI(); // Sett UI til starttilstand (knapper deaktivert etc.)
+    resetUI();
 }
 // === 2: INITIALISERING SLUTT ===
 
@@ -71,16 +76,14 @@ function setupCanvas() {
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
     console.log(`Canvas satt opp: ${canvas.width}x${canvas.height}`);
-    buildKeyMapping(); // Oppdater mapping hvis størrelsen endres
+    buildKeyMapping();
 }
 
 window.addEventListener('resize', () => {
     setupCanvas();
-    drawPiano(); // Tegn pianoet på nytt
-    // Hvis spillet kjører, bør vi kanskje tegne notene på nytt også
-    if (isPlaying) {
-         // Foreløpig: Bare tegn piano. Mer avansert logikk kan legges til.
-    }
+    // Tegn piano på nytt ved resize (viktig pga. navn og mapping)
+    activeKeys.clear(); // Ingen taster er aktive ved resize
+    drawPiano();
 });
 // === 3: CANVAS OPPSETT SLUTT ===
 
@@ -92,11 +95,9 @@ function setupEventListeners() {
 }
 
 function populateSongSelector() {
-    // Tøm eventuelle eksisterende options (utenom den første)
     while (songSelector.options.length > 1) {
         songSelector.remove(1);
     }
-    // Legg til sanger fra availableSongs
     for (const filename in availableSongs) {
         const option = document.createElement('option');
         option.value = filename;
@@ -109,18 +110,21 @@ function resetUI() {
     playButton.disabled = true;
     playButton.textContent = "Spill av";
     bpmInputElement.disabled = true;
-    bpmInputElement.value = 100; // Standardverdi
+    bpmInputElement.value = 100;
     originalBpmSpan.textContent = "";
     songInfoDiv.textContent = "Velg en sang fra menyen";
-    songSelector.selectedIndex = 0; // Tilbakestill til "-- Velg en sang --"
+    songSelector.selectedIndex = 0;
+    songSelector.disabled = false; // Sørg for at man kan velge sang
 }
 
 function handleSongSelect() {
     const selectedFilename = songSelector.value;
+    activeKeys.clear(); // Fjern highlights når ny sang velges
     if (!selectedFilename) {
         currentSong = null;
         resetUI();
-        resetPlayback(); // Nullstill spilltilstand også
+        resetPlayback();
+        drawPiano(); // Tegn tomt piano
         return;
     }
 
@@ -132,10 +136,8 @@ function handleSongSelect() {
 
     fetch(songPath)
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json(); // Parser responsen som JSON
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
         })
         .then(data => {
             currentSong = data;
@@ -143,37 +145,33 @@ function handleSongSelect() {
             if (!currentSong.tempo || !currentSong.notes) {
                 throw new Error("Sangfil mangler 'tempo' eller 'notes'.");
             }
-
-            // Oppdater UI med sanginfo
             songInfoDiv.textContent = `Klar: ${currentSong.title || availableSongs[selectedFilename]} (${currentSong.artist || 'Ukjent'})`;
-            currentPlaybackBPM = currentSong.tempo; // Sett playback BPM til sangens default
+            currentPlaybackBPM = currentSong.tempo;
             bpmInputElement.value = currentPlaybackBPM;
             originalBpmSpan.textContent = `(Original: ${currentSong.tempo} BPM)`;
-            bpmInputElement.disabled = false; // Aktiver BPM-input
-            playButton.disabled = false; // Aktiver spill-knappen
-            resetPlayback(); // Nullstill spilltilstand (viktig før nytt spill)
-
+            bpmInputElement.disabled = false;
+            playButton.disabled = false;
+            resetPlayback(); // Nullstiller spilltilstand, men ikke UI som er satt over
         })
         .catch(error => {
             console.error("Feil ved lasting eller parsing av sang:", error);
             songInfoDiv.textContent = `Feil: Kunne ikke laste sangen "${availableSongs[selectedFilename]}". Sjekk filen og konsollen.`;
             currentSong = null;
             resetUI();
+            resetPlayback(); // Nullstill også spilltilstand ved feil
+            drawPiano(); // Tegn tomt piano ved feil
         });
 }
 
 function handleBpmChange() {
     const newBpm = parseInt(bpmInputElement.value, 10);
     if (isNaN(newBpm) || newBpm < 20 || newBpm > 300) {
-        // Ugyldig verdi, sett tilbake til forrige gyldige
         bpmInputElement.value = currentPlaybackBPM;
         console.warn("Ugyldig BPM verdi.");
         return;
     }
     currentPlaybackBPM = newBpm;
     console.log(`Playback BPM endret til: ${currentPlaybackBPM}`);
-    // Hvis sangen spiller, vil endringen tas i bruk i neste gameLoop-tick
-    // Hvis sangen ikke spiller, vil den starte med denne nye BPM-en
 }
 // === 4: EVENT LISTENERS OG UI HÅNDTERING SLUTT ===
 
@@ -186,7 +184,7 @@ function buildKeyMapping() {
     if (!lastWhiteKey) { console.error("Ingen hvite taster definert i keyInfo"); return; }
     const pianoUnitsWidth = lastWhiteKey.xOffset + 1;
 
-    const availableWidth = canvas.width * 0.98; // Bruk 98% for litt mindre luft
+    const availableWidth = canvas.width * 0.98;
     const calculatedWhiteKeyWidth = availableWidth / pianoUnitsWidth;
     const actualWhiteKeyWidth = Math.min(whiteKeyWidth, calculatedWhiteKeyWidth);
     const actualBlackKeyWidth = actualWhiteKeyWidth * (blackKeyWidth / whiteKeyWidth);
@@ -200,7 +198,6 @@ function buildKeyMapping() {
                 x: xBase, width: actualWhiteKeyWidth, type: 'white', baseXOffset: key.xOffset
             };
         } else {
-            // Svart tangent: Juster x for sentrering rundt linjen (xOffset er relativt til forrige hvite)
             const adjustedX = xBase - actualBlackKeyWidth / 2;
              keyMapping[key.name] = {
                 x: adjustedX, width: actualBlackKeyWidth, type: 'black', baseXOffset: key.xOffset
@@ -215,27 +212,52 @@ function drawPiano() {
     const pianoDrawHeight = canvas.height - pianoHeight;
     ctx.fillStyle = '#333';
     ctx.fillRect(0, pianoDrawHeight -1, canvas.width, pianoHeight + 1);
+    ctx.textAlign = 'center'; // Felles for alle tangentnavn
 
-    // Tegn hvite tangenter
+    // Tegn hvite tangenter + navn + highlight
     keyInfo.forEach(key => {
         if (key.type === 'white') {
             const keyData = keyMapping[key.name];
             if (!keyData) return;
+            // Tegn tangent
             ctx.fillStyle = 'white';
             ctx.fillRect(keyData.x, pianoDrawHeight, keyData.width, pianoHeight);
+            // Tegn highlight hvis aktiv
+            if (activeKeys.has(key.name)) {
+                ctx.fillStyle = KEY_HIGHLIGHT_COLOR;
+                ctx.fillRect(keyData.x, pianoDrawHeight, keyData.width, pianoHeight);
+            }
+            // Tegn kantlinje
             ctx.strokeStyle = '#555';
             ctx.lineWidth = 1;
             ctx.strokeRect(keyData.x, pianoDrawHeight, keyData.width, pianoHeight);
+            // Tegn navn
+            ctx.fillStyle = KEY_NAME_COLOR_WHITE;
+            ctx.font = KEY_NAME_FONT;
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(key.name, keyData.x + keyData.width / 2, pianoDrawHeight + pianoHeight - 5);
         }
     });
 
-    // Tegn svarte tangenter
+    // Tegn svarte tangenter + navn + highlight (oppå hvite)
     keyInfo.forEach(key => {
         if (key.type === 'black') {
             const keyData = keyMapping[key.name];
              if (!keyData) return;
+            // Tegn tangent
             ctx.fillStyle = 'black';
             ctx.fillRect(keyData.x, pianoDrawHeight, keyData.width, blackKeyHeight);
+             // Tegn highlight hvis aktiv
+            if (activeKeys.has(key.name)) {
+                ctx.fillStyle = KEY_HIGHLIGHT_COLOR;
+                // Fremhev kun den svarte delen
+                ctx.fillRect(keyData.x, pianoDrawHeight, keyData.width, blackKeyHeight);
+            }
+            // Tegn navn
+            ctx.fillStyle = KEY_NAME_COLOR_BLACK;
+            ctx.font = KEY_NAME_FONT;
+            ctx.textBaseline = 'bottom'; // Plasser nederst på den svarte tangenten
+            ctx.fillText(key.name, keyData.x + keyData.width / 2, pianoDrawHeight + blackKeyHeight - 5);
         }
     });
 }
@@ -244,6 +266,8 @@ function drawPiano() {
 // === 6: AVSPILLINGS KONTROLL START ===
 function togglePlayback() {
     if (!currentSong) return;
+    activeKeys.clear(); // Fjern highlights ved play/pause
+    drawPiano(); // Tegn piano på nytt uten highlights
 
     if (isPlaying) {
         pauseSong();
@@ -256,11 +280,9 @@ function playSong() {
     if (!currentSong) return;
     isPlaying = true;
     playButton.textContent = "Pause";
-    bpmInputElement.disabled = true; // Kan ikke endre BPM mens det spilles (forenkling)
-    songSelector.disabled = true; // Kan ikke bytte sang mens det spilles
+    bpmInputElement.disabled = true;
+    songSelector.disabled = true;
 
-    // Hvis startTime er 0 (eller veldig gammel), start fra begynnelsen med pre-roll
-    // Ellers, hvis vi implementerer pause/resume, må vi justere startTime her.
     // Foreløpig starter vi alltid fra begynnelsen.
     startTime = performance.now() + PRE_ROLL_SECONDS * 1000;
     console.log(`Starter avspilling (BPM: ${currentPlaybackBPM}) med ${PRE_ROLL_SECONDS}s pre-roll...`);
@@ -272,32 +294,31 @@ function playSong() {
 
 function pauseSong() {
     isPlaying = false;
-    playButton.textContent = "Fortsett"; // Endret fra "Spill av"
-    bpmInputElement.disabled = false; // Kan endre BPM i pause
-    songSelector.disabled = false; // Kan bytte sang i pause
-    // Ikke kanseller animationFrameId her hvis vi skal kunne fortsette
-    // Vi stopper bare bevegelsen i gameLoop
-    console.log("Avspilling pauset.");
-    // For å kunne fortsette nøyaktig, må vi lagre `currentBeat` når vi pauser.
-    // Dette er ikke implementert ennå. "Fortsett" vil starte fra begynnelsen.
-    // For å reflektere dette, sett knappen tilbake til "Spill av" og stopp løkken:
-    playButton.textContent = "Spill av"; // Tilbake til "Spill av" siden vi ikke har resume
+    playButton.textContent = "Spill av"; // Tilbake til "Spill av" da vi ikke har resume
+    bpmInputElement.disabled = false;
+    songSelector.disabled = false;
+
+    // Stopp animasjonsløkken helt siden vi ikke har resume
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    // Fjern aktive taster og tegn piano på nytt i pausetilstand
+    activeKeys.clear();
+    drawPiano();
+    console.log("Avspilling stoppet.");
 }
 
 function resetPlayback() {
-    // Denne kalles når ny sang velges, eller ved full stopp.
-    isPlaying = false; // Stopp avspilling
+    isPlaying = false;
     if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId); // Stopp animasjonen
+        cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
-    startTime = 0; // Nullstill starttid
+    startTime = 0;
+    activeKeys.clear(); // Fjern aktive taster
+
     playButton.textContent = "Spill av";
-    // Aktiver kontroller hvis en sang er lastet
     if (currentSong) {
         playButton.disabled = false;
         bpmInputElement.disabled = false;
@@ -305,13 +326,12 @@ function resetPlayback() {
     } else {
         playButton.disabled = true;
         bpmInputElement.disabled = true;
-        songSelector.disabled = false; // Kan alltid velge sang
+        songSelector.disabled = false;
     }
 
-    // Tøm canvas og tegn bare pianoet
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     buildKeyMapping(); // Sørg for at mapping er oppdatert
-    drawPiano();
+    drawPiano(); // Tegn piano (uten highlights)
     console.log("Avspilling nullstilt.");
 }
 // === 6: AVSPILLINGS KONTROLL SLUTT ===
@@ -322,25 +342,23 @@ function gameLoop() {
 
     const currentTime = performance.now();
 
-    // Hvis ikke spiller, tegn statisk bilde og returner
-    if (!isPlaying) {
-         // Tegn piano i tilfelle resize e.l. har skjedd mens pauset
-         // drawPiano(); // Kan droppes hvis vi ikke forventer endringer i pause
-        return;
-    }
+    if (!isPlaying) return; // Ikke gjør noe mer hvis pauset/stoppet
 
-    // Beregn tid og beat basert på JUSTERBAR BPM
     const elapsedTimeInSeconds = (currentTime - startTime) / 1000;
-    const beatsPerSecond = currentPlaybackBPM / 60; // *** BRUKER currentPlaybackBPM ***
+    const beatsPerSecond = currentPlaybackBPM / 60;
     const currentBeat = elapsedTimeInSeconds * beatsPerSecond;
 
+    // Nullstill aktive taster før vi sjekker på nytt
+    activeKeys.clear();
+
+    // Sjekk hvilke taster som skal være aktive (dette gjøres nå i drawFallingNotes)
     // Tøm canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Tegn fallende noter (bruker også currentPlaybackBPM internt nå)
+    // Tegn fallende noter OG oppdater activeKeys
     drawFallingNotes(currentBeat);
 
-    // Tegn piano
+    // Tegn piano (vil nå bruke oppdatert activeKeys for highlighting)
     drawPiano();
 
     // Tegn tidslinje/beat-teller
@@ -350,7 +368,6 @@ function gameLoop() {
     ctx.fillText(`Beat: ${currentBeat.toFixed(2)}`, 10, 20);
     ctx.textAlign = 'right';
     ctx.fillText(`BPM: ${currentPlaybackBPM}`, canvas.width - 10, 20);
-
 }
 // === 7: ANIMASJONSLØKKE SLUTT ===
 
@@ -358,11 +375,11 @@ function gameLoop() {
 function drawFallingNotes(currentBeat) {
     if (!currentSong || !currentSong.notes || Object.keys(keyMapping).length === 0) return;
 
-    // Beregninger basert på JUSTERBAR BPM
-    const secondsPerBeat = 60 / currentPlaybackBPM; // *** BRUKER currentPlaybackBPM ***
+    const secondsPerBeat = 60 / currentPlaybackBPM;
     const fallHeight = canvas.height - pianoHeight;
     const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS;
     const pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+    const targetLineY = canvas.height - pianoHeight; // Y-koordinat for toppen av pianoet
 
     currentSong.notes.forEach(note => {
         const keyData = keyMapping[note.key];
@@ -370,27 +387,37 @@ function drawFallingNotes(currentBeat) {
 
         const targetBeat = note.time;
         const beatsUntilHit = targetBeat - currentBeat;
-        const yBottom = (canvas.height - pianoHeight) - (beatsUntilHit * pixelsPerBeat);
+        const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat);
         const notePixelHeight = note.duration * pixelsPerBeat;
         const yTop = yBottom - notePixelHeight;
         const xPosition = keyData.x;
         const noteWidth = keyData.width;
 
+        // *** Sjekk om noten er nær nok til å aktivere tangenten ***
+        // Noten aktiverer tangenten hvis dens starttid (targetBeat) er
+        // innenfor toleransen av currentBeat.
+        if (Math.abs(beatsUntilHit) < NOTE_HIT_TOLERANCE_BEATS / 2) {
+             activeKeys.add(note.key);
+        }
+        // Alternativt: Aktiver hvis noten *overlapper* trefflinjen:
+        // if (yBottom >= targetLineY && yTop < targetLineY) {
+        //      activeKeys.add(note.key);
+        // }
+        // Vi bruker beat-toleranse - det er kanskje mer robust.
+
+        // Tegn noten hvis den er synlig
         if (yTop < canvas.height && yBottom > 0) {
-            if (keyData.type === 'white') {
-                ctx.fillStyle = 'cyan';
-            } else {
-                ctx.fillStyle = 'magenta';
-            }
+            // Sett farge basert på tangenttype
+            ctx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR;
             ctx.fillRect(xPosition, yTop, noteWidth, notePixelHeight);
 
             // Tegn "trefflinje" nederst på noten
-             ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-             ctx.lineWidth = 1;
-             ctx.beginPath();
-             ctx.moveTo(xPosition, yBottom);
-             ctx.lineTo(xPosition + noteWidth, yBottom);
-             ctx.stroke();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(xPosition, yBottom);
+            ctx.lineTo(xPosition + noteWidth, yBottom);
+            ctx.stroke();
         }
     });
 }
