@@ -40,7 +40,7 @@ const copyJsonButton = document.getElementById('copyJsonButton');
 const availableSongs = {
     "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
     "odetojoy.json": "Ode to Joy (Beethoven)",
-    "pink_panther_theme.json": "Pink Panther Theme"
+    "pink_panther_theme.json": "Pink Panther Theme" // Erstatt med den beste du fant
 };
 const songsFolderPath = 'songs/';
 let currentSong = null;
@@ -100,9 +100,9 @@ const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "
 function initialize() {
     console.log("Initialiserer...");
     try {
-        if (!gameCanvas || !recordPianoCanvas || !gameCtx || !recordPianoCtx) { console.error("FEIL: Canvas/Context mangler!"); return; }
+        if (!gameCanvas || !recordPianoCanvas || !gameCtx || !recordPianoCtx) { console.error("FEIL: Canvas/Context mangler ved init!"); return; }
         setupCanvases(); buildKeyMappings(); drawPianos(); populateSongSelector(); setupEventListeners(); resetUI();
-        // Ikke kall switchTab her, la CSS bestemme start-tab
+        // La CSS styre startvisning, men sett knapp aktiv
         if(tabButtonPlay) tabButtonPlay.classList.add('active');
         if(tabButtonRecord) tabButtonRecord.classList.remove('active');
         updateRecordModeUI();
@@ -113,14 +113,70 @@ function initialize() {
 
 
 // === 3: CANVAS OPPSETT START ===
-function setupCanvases() { const playContainer = document.querySelector('.game-area'); if (playContainer && gameCanvas) { gameCanvas.width = playContainer.clientWidth; gameCanvas.height = playContainer.clientHeight; } const recordContainer = document.querySelector('.record-piano-area'); if (recordContainer && recordPianoCanvas) { recordPianoCanvas.width = recordContainer.clientWidth; recordPianoCanvas.height = PIANO_HEIGHT_RECORD; } /* console.log(`Canvas satt opp: Game=${gameCanvas?.width}x${gameCanvas?.height}, Record=${recordPianoCanvas?.width}x${recordPianoCanvas?.height}`); */ }
-window.addEventListener('resize', () => { setupCanvases(); buildKeyMappings(); drawPianos(); });
+function setupCanvases() {
+    const playContainer = document.querySelector('.game-area');
+    if (playContainer && gameCanvas) {
+        gameCanvas.width = playContainer.clientWidth;
+        gameCanvas.height = playContainer.clientHeight;
+    } else {
+        console.error("Fant ikke .game-area eller gameCanvas under setup");
+    }
+    const recordContainer = document.querySelector('.record-piano-area');
+    if (recordContainer && recordPianoCanvas) {
+        recordPianoCanvas.width = recordContainer.clientWidth;
+        recordPianoCanvas.height = PIANO_HEIGHT_RECORD;
+    } else {
+         console.error("Fant ikke .record-piano-area eller recordPianoCanvas under setup");
+    }
+}
+window.addEventListener('resize', () => {
+    console.log("Resize event");
+    setupCanvases();
+    buildKeyMappings();
+    drawPianos(); // Tegn begge pianoer på resize
+});
 // === 3: CANVAS OPPSETT SLUTT ===
 
 
 // === 4: EVENT LISTENERS OG UI HÅNDTERING START ===
-function setupEventListeners() { /* ... Som i Svar #43 ... */ console.log("Setter opp event listeners..."); function safeAddListener(element, eventType, handler, elementName) { if (element) { element.addEventListener(eventType, handler); } else { console.error(`FEIL: Kunne ikke finne elementet '${elementName}'!`); } } safeAddListener(tabButtonPlay, 'click', () => switchTab('play'), 'tabButtonPlay'); safeAddListener(tabButtonRecord, 'click', () => switchTab('record'), 'tabButtonRecord'); safeAddListener(songSelector, 'change', handleSongSelect, 'songSelector'); safeAddListener(bpmInputElement, 'change', handlePlaybackBpmChange, 'bpmInputElement'); safeAddListener(playButton, 'click', togglePlayback, 'playButton'); safeAddListener(volumeSlider, 'input', handleVolumeChange, 'volumeSlider'); safeAddListener(muteCheckbox, 'change', handleMuteToggle, 'muteCheckbox'); safeAddListener(recordModeSelector, 'change', handleRecordModeChange, 'recordModeSelector'); safeAddListener(startRecordButton, 'click', startRecording, 'startRecordButton'); safeAddListener(stopRecordButton, 'click', stopRecording, 'stopRecordButton'); safeAddListener(clearRecordButton, 'click', clearRecording, 'clearRecordButton'); safeAddListener(addStepNoteButton, 'click', addStepNote, 'addStepNoteButton'); safeAddListener(addRestButton, 'click', addStepRest, 'addRestButton'); safeAddListener(copyJsonButton, 'click', copyJsonToClipboard, 'copyJsonButton'); safeAddListener(recordPianoCanvas, 'mousedown', handleRecordPianoMouseDown, 'recordPianoCanvas'); safeAddListener(recordPianoCanvas, 'mouseup', handleRecordPianoMouseUp, 'recordPianoCanvas'); console.log("Event listeners satt opp."); }
-function switchTab(tabName) { console.log("Bytter til fane:", tabName); const isPlayTab = tabName === 'play'; if (!playArea || !recordArea || !tabButtonPlay || !tabButtonRecord) { console.error("Mangler fane/knapp-elementer!"); return; } playArea.classList.toggle('active', isPlayTab); recordArea.classList.toggle('active', !isPlayTab); tabButtonPlay.classList.toggle('active', isPlayTab); tabButtonRecord.classList.toggle('active', !isPlayTab); if (isPlayTab && isRecording) stopRecording(); if (!isPlayTab && isPlaying) { stopSoundPlayback(); pauseSongVisuals(); } setTimeout(() => { setupCanvases(); buildKeyMappings(); drawPianos(); }, 0); console.log(`Fanebytte til '${tabName}' fullført.`); }
+function setupEventListeners() {
+    console.log("Setter opp event listeners...");
+    function safeAddListener(element, eventType, handler, elementName) { if (element) { element.addEventListener(eventType, handler); } else { console.error(`FEIL: Kunne ikke finne elementet '${elementName}'!`); } }
+    safeAddListener(tabButtonPlay, 'click', () => switchTab('play'), 'tabButtonPlay');
+    safeAddListener(tabButtonRecord, 'click', () => switchTab('record'), 'tabButtonRecord');
+    safeAddListener(songSelector, 'change', handleSongSelect, 'songSelector');
+    safeAddListener(bpmInputElement, 'change', handlePlaybackBpmChange, 'bpmInputElement');
+    safeAddListener(playButton, 'click', togglePlayback, 'playButton');
+    safeAddListener(volumeSlider, 'input', handleVolumeChange, 'volumeSlider');
+    safeAddListener(muteCheckbox, 'change', handleMuteToggle, 'muteCheckbox');
+    safeAddListener(recordModeSelector, 'change', handleRecordModeChange, 'recordModeSelector');
+    safeAddListener(startRecordButton, 'click', startRecording, 'startRecordButton');
+    safeAddListener(stopRecordButton, 'click', stopRecording, 'stopRecordButton');
+    safeAddListener(clearRecordButton, 'click', clearRecording, 'clearRecordButton');
+    safeAddListener(addStepNoteButton, 'click', addStepNote, 'addStepNoteButton');
+    safeAddListener(addRestButton, 'click', addStepRest, 'addRestButton');
+    safeAddListener(copyJsonButton, 'click', copyJsonToClipboard, 'copyJsonButton');
+    safeAddListener(recordPianoCanvas, 'mousedown', handleRecordPianoMouseDown, 'recordPianoCanvas');
+    safeAddListener(recordPianoCanvas, 'mouseup', handleRecordPianoMouseUp, 'recordPianoCanvas');
+    console.log("Event listeners satt opp.");
+}
+
+function switchTab(tabName) {
+    console.log("Bytter til fane:", tabName);
+    const isPlayTab = tabName === 'play';
+    if (!playArea || !recordArea || !tabButtonPlay || !tabButtonRecord) { console.error("Mangler fane/knapp-elementer!"); return; }
+    playArea.classList.toggle('active', isPlayTab);
+    recordArea.classList.toggle('active', !isPlayTab);
+    tabButtonPlay.classList.toggle('active', isPlayTab);
+    tabButtonRecord.classList.toggle('active', !isPlayTab);
+    if (isPlayTab && isRecording) stopRecording();
+    if (!isPlayTab && isPlaying) { stopSoundPlayback(); pauseSongVisuals(); }
+    setTimeout(() => { // La CSS-endring skje før vi tegner/oppdaterer
+        setupCanvases(); buildKeyMappings(); drawPianos();
+    }, 0);
+    console.log(`Fanebytte til '${tabName}' fullført.`);
+}
+
 function updateRecordModeUI() { if (!recordModeSelector || !stepModeControls || !realtimeModeControls || !addStepNoteButton || !addRestButton) return; recordingMode = recordModeSelector.value; const isStepMode = recordingMode === 'step'; stepModeControls.style.display = isStepMode ? 'flex' : 'none'; realtimeModeControls.style.display = isStepMode ? 'none' : 'flex'; addStepNoteButton.disabled = !isStepMode || selectedStepNote === null || isRecording; addRestButton.disabled = !isStepMode || isRecording; }
 function populateSongSelector() { if (!songSelector) return; while (songSelector.options.length > 1) songSelector.remove(1); for (const filename in availableSongs) { const option = document.createElement('option'); option.value = filename; option.textContent = availableSongs[filename]; songSelector.appendChild(option); } }
 function resetUI() { if (!playButton || !bpmInputElement || !songInfoDiv || !songSelector || !originalBpmSpan) return; playButton.disabled = true; playButton.textContent = "Spill av"; bpmInputElement.disabled = true; bpmInputElement.value = 100; originalBpmSpan.textContent = ""; songInfoDiv.textContent = "Velg en sang fra menyen"; songSelector.selectedIndex = 0; songSelector.disabled = false; console.log("UI resatt (Play Tab)."); }
@@ -150,18 +206,20 @@ function resetPlayback() { console.log("resetPlayback: Kjører."); stopSoundPlay
 
 
 // === 7: ANIMASJONSLØKKE (Avspilling) START ===
-function gameLoop() { animationFrameId = requestAnimationFrame(gameLoop); if (!isPlaying) { animationFrameId = null; return; } const currentTime = performance.now(); const elapsedTimeInSeconds = (currentTime - playbackStartTime) / 1000; const beatsPerSecond = currentPlaybackBPM / 60; const currentBeat = elapsedTimeInSeconds * beatsPerSecond; activeKeys.clear(); if (!gameCtx || !gameCanvas) { console.error("gameLoop: gameCtx eller gameCanvas er null!"); return; } drawSpecificPiano(gameCtx, gameCanvas, PIANO_HEIGHT_PLAY, keyMappingPlay, activeKeys, KEY_HIGHLIGHT_COLOR); drawFallingNotes(currentBeat); gameCtx.fillStyle = 'white'; gameCtx.font = '16px sans-serif'; gameCtx.textAlign = 'left'; gameCtx.fillText(`Beat: ${currentBeat.toFixed(2)}`, 10, 20); gameCtx.textAlign = 'right'; gameCtx.fillText(`BPM: ${currentPlaybackBPM}`, gameCanvas.width - 10, 20); }
+function gameLoop() { animationFrameId = requestAnimationFrame(gameLoop); if (!isPlaying) { animationFrameId = null; return; } const currentTime = performance.now(); const elapsedTimeInSeconds = (currentTime - playbackStartTime) / 1000; const beatsPerSecond = currentPlaybackBPM / 60; const currentBeat = elapsedTimeInSeconds * beatsPerSecond; if (!gameCtx || !gameCanvas) { console.error("gameLoop: gameCtx eller gameCanvas er null!"); return; } // Flyttet sjekk hit updateActiveKeys(currentBeat); // Beregn keys FØR tegning gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Tøm lerret drawSpecificPiano(gameCtx, gameCanvas, PIANO_HEIGHT_PLAY, keyMappingPlay, activeKeys, KEY_HIGHLIGHT_COLOR); // Tegn piano med highlights drawFallingNotes(currentBeat); // Tegn noter gameCtx.fillStyle = 'white'; gameCtx.font = '16px sans-serif'; gameCtx.textAlign = 'left'; gameCtx.fillText(`Beat: ${currentBeat.toFixed(2)}`, 10, 20); gameCtx.textAlign = 'right'; gameCtx.fillText(`BPM: ${currentPlaybackBPM}`, gameCanvas.width - 10, 20); }
+
+// *** NY Hjelpefunksjon lagt til ***
+function updateActiveKeys(currentBeat) { activeKeys.clear(); if (!currentSong || !currentSong.notes) return; currentSong.notes.forEach(note => { const noteStartTime = note.time; const noteEndTime = note.time + note.duration; if (currentBeat >= noteStartTime && currentBeat < noteEndTime) { activeKeys.add(note.key); } }); }
 // === 7: ANIMASJONSLØKKE (Avspilling) SLUTT ===
 
 
 // === 8: TEGNE FALLENDE NOTER START ===
-function drawFallingNotes(currentBeat) { if (!currentSong || !currentSong.notes || !gameCtx || !gameCanvas || Object.keys(keyMappingPlay).length === 0) return; const secondsPerBeat = 60 / currentPlaybackBPM; const fallHeight = gameCanvas.height - PIANO_HEIGHT_PLAY; if (fallHeight <= 0) return; const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS; const pixelsPerBeat = pixelsPerSecond * secondsPerBeat; const targetLineY = gameCanvas.height - PIANO_HEIGHT_PLAY; currentSong.notes.forEach(note => { const keyData = keyMappingPlay[note.key]; if (!keyData) return; const noteStartTime = note.time; const noteEndTime = note.time + note.duration; if (currentBeat >= noteStartTime && currentBeat < noteEndTime) activeKeys.add(note.key); const targetBeat = note.time; const beatsUntilHit = targetBeat - currentBeat; const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat); const notePixelHeight = Math.max(1, note.duration * pixelsPerBeat); const yTop = yBottom - notePixelHeight; const xPosition = keyData.x; const noteWidth = keyData.width; if (yTop < gameCanvas.height && yBottom > 0) { gameCtx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR; gameCtx.strokeStyle = NOTE_BORDER_COLOR; gameCtx.lineWidth = 1; gameCtx.beginPath(); if (gameCtx.roundRect) { gameCtx.roundRect(xPosition, yTop, noteWidth, notePixelHeight, NOTE_CORNER_RADIUS); } else { gameCtx.rect(xPosition, yTop, noteWidth, notePixelHeight); } gameCtx.fill(); gameCtx.stroke(); } }); }
+function drawFallingNotes(currentBeat) { if (!currentSong || !currentSong.notes || !gameCtx || !gameCanvas || Object.keys(keyMappingPlay).length === 0) return; const secondsPerBeat = 60 / currentPlaybackBPM; const fallHeight = gameCanvas.height - PIANO_HEIGHT_PLAY; if (fallHeight <= 0) return; const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS; const pixelsPerBeat = pixelsPerSecond * secondsPerBeat; const targetLineY = gameCanvas.height - PIANO_HEIGHT_PLAY; currentSong.notes.forEach(note => { const keyData = keyMappingPlay[note.key]; if (!keyData) return; // activeKeys settes nå i updateActiveKeys, ikke her lenger const targetBeat = note.time; const beatsUntilHit = targetBeat - currentBeat; const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat); const notePixelHeight = Math.max(1, note.duration * pixelsPerBeat); const yTop = yBottom - notePixelHeight; const xPosition = keyData.x; const noteWidth = keyData.width; if (yTop < gameCanvas.height && yBottom > 0) { gameCtx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR; gameCtx.strokeStyle = NOTE_BORDER_COLOR; gameCtx.lineWidth = 1; gameCtx.beginPath(); if (gameCtx.roundRect) { gameCtx.roundRect(xPosition, yTop, noteWidth, notePixelHeight, NOTE_CORNER_RADIUS); } else { gameCtx.rect(xPosition, yTop, noteWidth, notePixelHeight); } gameCtx.fill(); gameCtx.stroke(); } }); }
 // === 8: TEGNE FALLENDE NOTER SLUTT ===
 
 
 // === 9: START PROGRAMMET START ===
 document.addEventListener('DOMContentLoaded', initialize);
-console.log("Venter på DOMContentLoaded for initialize...");
 // === 9: START PROGRAMMET SLUTT ===
 
 
@@ -169,8 +227,8 @@ console.log("Venter på DOMContentLoaded for initialize...");
 function initAudio() { if (isAudioInitialized) return true; try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); masterGainNode = audioContext.createGain(); masterGainNode.connect(audioContext.destination); currentVolume = parseFloat(volumeSlider.value); isMuted = muteCheckbox.checked; masterGainNode.gain.setValueAtTime(isMuted ? 0 : currentVolume, audioContext.currentTime); isAudioInitialized = true; console.log("AudioContext initialisert OK."); return true; } catch (e) { console.error("Web Audio API støttes ikke eller feilet.", e); alert("Kunne ikke initialisere lyd."); isAudioInitialized = false; return false; } }
 function noteToFrequency(noteName) { if (!noteName) return null; const octave = parseInt(noteName.slice(-1)); const key = noteName.slice(0, -1); const keyIndex = noteNames.indexOf(key); if (keyIndex < 0) return null; const midiNum = 12 + (octave * 12) + keyIndex; const freq = Math.pow(2, (midiNum - A4_MIDI_NUM) / 12) * A4_FREQ; return freq; }
 function scheduleSongAudio() { if (!currentSong || !audioContext || !masterGainNode) return; stopSoundPlayback(); console.log("scheduleSongAudio: Planlegger lyd..."); const audioStartTimeOffset = audioContext.currentTime + PRE_ROLL_SECONDS; const secondsPerBeat = 60.0 / currentPlaybackBPM; currentSong.notes.forEach(note => { const freq = noteToFrequency(note.key); if (freq === null) return; const noteStartAudioTime = audioStartTimeOffset + (note.time * secondsPerBeat); const noteEndAudioTime = noteStartAudioTime + (note.duration * secondsPerBeat); if (noteEndAudioTime <= noteStartAudioTime) return; const osc = audioContext.createOscillator(); osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, audioContext.currentTime); const noteGain = audioContext.createGain(); noteGain.gain.setValueAtTime(0, audioContext.currentTime); osc.connect(noteGain); noteGain.connect(masterGainNode); const attackTime = 0.01; const releaseTime = 0.05; const peakVolume = 0.8; noteGain.gain.linearRampToValueAtTime(peakVolume, noteStartAudioTime + attackTime); noteGain.gain.setValueAtTime(peakVolume, Math.max(noteStartAudioTime + attackTime, noteEndAudioTime - releaseTime)); noteGain.gain.linearRampToValueAtTime(0, noteEndAudioTime); osc.start(noteStartAudioTime); osc.stop(noteEndAudioTime + 0.1); scheduledAudioSources.push({ oscillator: osc, gain: noteGain }); }); console.log(`Planlagt ${scheduledAudioSources.length} noter.`); }
-function stopSoundPlayback() { if (!audioContext) return; /* console.log(`Stopper ${scheduledAudioSources.length} lydkilder...`); */ scheduledAudioSources.forEach(source => { try { source.gain.gain.cancelScheduledValues(audioContext.currentTime); source.gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.05); source.oscillator.stop(audioContext.currentTime + 0.1); } catch (e) {} }); scheduledAudioSources = []; }
-function playFeedbackTone(noteName) { if (!audioContext || !masterGainNode) { console.warn("playFeedbackTone: Audio ikke klar."); return; } const freq = noteToFrequency(noteName); if (!freq) return; const osc = audioContext.createOscillator(); const gain = audioContext.createGain(); osc.connect(gain); gain.connect(masterGainNode); osc.type = 'sine'; osc.frequency.setValueAtTime(freq, audioContext.currentTime); gain.gain.setValueAtTime(0, audioContext.currentTime); gain.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.01); gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.2); osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.25); }
+function stopSoundPlayback() { if (!audioContext) return; scheduledAudioSources.forEach(source => { try { source.gain.gain.cancelScheduledValues(audioContext.currentTime); source.gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.05); source.oscillator.stop(audioContext.currentTime + 0.1); } catch (e) {} }); scheduledAudioSources = []; }
+function playFeedbackTone(noteName) { if (!audioContext || !masterGainNode) return; const freq = noteToFrequency(noteName); if (!freq) return; const osc = audioContext.createOscillator(); const gain = audioContext.createGain(); osc.connect(gain); gain.connect(masterGainNode); osc.type = 'sine'; osc.frequency.setValueAtTime(freq, audioContext.currentTime); gain.gain.setValueAtTime(0, audioContext.currentTime); gain.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.01); gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.2); osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.25); }
 // === 10: WEB AUDIO FUNKSJONER SLUTT ===
 
 
