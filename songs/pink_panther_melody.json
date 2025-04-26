@@ -3,88 +3,62 @@
   "artist": "Henry Mancini (Arr.)",
   "tempo": 110,
   "notes": [
-    // Takt 36 (Starter på beat 0)
     { "key": "E4", "time": 1, "duration": 0.5 },
     { "key": "F#4", "time": 1.5, "duration": 0.5 },
     { "key": "G4", "time": 2, "duration": 0.5 },
-    // Rest 2.5
     { "key": "E4", "time": 3, "duration": 0.5 },
     { "key": "F#4", "time": 3.5, "duration": 0.5 },
-    // Takt 37 (Starter på beat 4)
     { "key": "G4", "time": 4, "duration": 1 },
     { "key": "C5", "time": 5, "duration": 0.5 },
     { "key": "B4", "time": 5.5, "duration": 0.5 },
     { "key": "E4", "time": 6, "duration": 0.5 },
     { "key": "F#4", "time": 6.5, "duration": 0.5 },
     { "key": "G4", "time": 7, "duration": 1 },
-    // Takt 38 (Starter på beat 8)
     { "key": "C5", "time": 8, "duration": 0.5 },
     { "key": "B4", "time": 8.5, "duration": 0.5 },
     { "key": "E4", "time": 9, "duration": 0.5 },
     { "key": "G4", "time": 9.5, "duration": 0.5 },
-    // Triol start (beat 10)
     { "key": "A#4", "time": 10, "duration": 0.333 },
     { "key": "B4", "time": 10.333, "duration": 0.333 },
     { "key": "C5", "time": 10.667, "duration": 0.333 },
-    // Triol start (beat 11)
     { "key": "B4", "time": 11, "duration": 0.333 },
     { "key": "A#4", "time": 11.333, "duration": 0.333 },
     { "key": "G4", "time": 11.667, "duration": 0.333 },
-    // Takt 39 (Starter på beat 12)
     { "key": "E4", "time": 12, "duration": 2 },
-    // Rest 14, 15
-    // Takt 40 (Starter på beat 16)
     { "key": "E4", "time": 16, "duration": 0.5 },
     { "key": "F#4", "time": 16.5, "duration": 0.5 },
     { "key": "G4", "time": 17, "duration": 0.5 },
-    // Rest 17.5
     { "key": "E4", "time": 18, "duration": 0.5 },
     { "key": "F#4", "time": 18.5, "duration": 0.5 },
     { "key": "G4", "time": 19, "duration": 1 },
-    // Takt 41 (Starter på beat 20)
     { "key": "C5", "time": 20, "duration": 0.5 },
     { "key": "B4", "time": 20.5, "duration": 0.5 },
-    { "key": "E4", "time": 21, "duration": 1.5 }, // Punktert fjerdedel
+    { "key": "E4", "time": 21, "duration": 1.5 },
     { "key": "F#4", "time": 22.5, "duration": 0.5 },
     { "key": "G4", "time": 23, "duration": 1 },
-    // Takt 42 (Starter på beat 24)
     { "key": "C5", "time": 24, "duration": 0.5 },
     { "key": "B4", "time": 24.5, "duration": 0.5 },
-     // Triol start (beat 25)
     { "key": "A#4", "time": 25, "duration": 0.333 },
     { "key": "B4", "time": 25.333, "duration": 0.333 },
     { "key": "C5", "time": 25.667, "duration": 0.333 },
-    // Triol start (beat 26)
     { "key": "B4", "time": 26, "duration": 0.333 },
     { "key": "A#4", "time": 26.333, "duration": 0.333 },
     { "key": "G4", "time": 26.667, "duration": 0.333 },
     { "key": "E4", "time": 27, "duration": 1 },
-    // Takt 43 (Starter på beat 28) - Rests
-    // Takt 44 (Starter på beat 32)
-     // Triol start (beat 32)
     { "key": "G4", "time": 32, "duration": 0.333 },
     { "key": "A#4", "time": 32.333, "duration": 0.333 },
     { "key": "B4", "time": 32.667, "duration": 0.333 },
     { "key": "C5", "time": 33, "duration": 0.5 },
-    // Rest 33.5, 34, 35
-    // Takt 45 (Starter på beat 36)
-    // Triol start (beat 36)
     { "key": "G4", "time": 36, "duration": 0.333 },
     { "key": "A#4", "time": 36.333, "duration": 0.333 },
     { "key": "B4", "time": 36.667, "duration": 0.333 },
     { "key": "C5", "time": 37, "duration": 1 },
-    // Rest 38
     { "key": "E5", "time": 39, "duration": 0.5 },
     { "key": "D#5", "time": 39.5, "duration": 0.5 },
-     // Takt 46 (Starter på beat 40)
     { "key": "E5", "time": 40, "duration": 1 },
-    // Rest 41
-    // Rest 42
     { "key": "D#5", "time": 42.5, "duration": 0.5 },
     { "key": "E5", "time": 43, "duration": 0.5 },
     { "key": "F#5", "time": 43.5, "duration": 0.5 },
-    // Takt 47 (Starter på beat 44)
-    // Helnote med fermata. Gir den litt ekstra lengde, f.eks 5 beats.
     { "key": "G5", "time": 44, "duration": 5 }
   ]
 }
