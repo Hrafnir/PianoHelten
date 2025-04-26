@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piano Hero Øving & Komponering</title> {/* Endret tittel */}
+    <title>Piano Hero Øving & Komponering</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
     </div>
     {/* === FANER SLUTT === */}
 
-    {/* === AVSPILLINGSSEKSJON (tidligere .controls og .game-area) START === */}
+    {/* === AVSPILLINGSSEKSJON START === */}
     <div id="playArea" class="tab-content active">
 
         {/* === 1: KONTROLLPANEL (Avspilling) START === */}
@@ -25,12 +25,12 @@
                 <label for="songSelector">Velg Sang:</label>
                 <select id="songSelector">
                     <option value="">-- Velg en sang --</option>
-                    {/* Sanger legges til her av JavaScript */}
+                    {/* Fylles av JavaScript */}
                 </select>
             </div>
             <div class="control-row">
                 <label for="bpmInput">Tempo (BPM):</label>
-                <input type="number" id="bpmInput" min="20" max="300" step="1" value="100">
+                <input type="number" id="bpmInput" min="20" max="300" step="1" value="100" disabled> {/* Start disabled */}
                 <span id="originalBpm"></span>
             </div>
             <div class="control-row audio-controls">
@@ -41,7 +41,7 @@
                  </label>
             </div>
             <div class="control-row">
-                <button id="playButton">Spill av</button>
+                <button id="playButton" disabled>Spill av</button> {/* Start disabled */}
                 <span id="songInfo">Velg en sang</span>
             </div>
              {/* TODO: Pause, Spoling, Loop kontroller her senere */}
@@ -76,19 +76,19 @@
 
             {/* Modusvelger og Innspillingskontroller */}
             <div class="control-row">
-                 <label>Modus:</label>
+                 <label for="recordModeSelector">Modus:</label> {/* Lagt til for-attributt */}
                  <select id="recordModeSelector">
                      <option value="realtime">Sanntid (med kvantisering)</option>
                      <option value="step">Steg-for-steg</option>
                  </select>
                  <button id="startRecordButton">Start Innspilling</button>
                  <button id="stopRecordButton" disabled>Stopp Innspilling</button>
-                 <button id="clearRecordButton">Tøm Innspilling</button>
+                 <button id="clearRecordButton" disabled>Tøm Innspilling</button> {/* Start disabled */}
             </div>
 
              {/* Kontroller for Steg-for-steg (vises/skjules av JS) */}
             <div id="stepModeControls" class="control-row" style="display: none;">
-                <label>Varighet:</label>
+                <label for="stepDurationSelector">Varighet:</label> {/* Lagt til for-attributt */}
                 <select id="stepDurationSelector">
                     <option value="4">Helnote (4 slag)</option>
                     <option value="2">Halvnote (2 slag)</option>
@@ -100,12 +100,12 @@
                      {/* Kan legge til trioler etc. senere */}
                 </select>
                 <button id="addStepNoteButton" disabled>Legg til Valgt Tone</button>
-                <button id="addRestButton">Legg til Pause</button>
+                <button id="addRestButton" disabled>Legg til Pause</button> {/* Start disabled */}
             </div>
 
              {/* Kontroller for Sanntid (vises/skjules av JS) */}
              <div id="realtimeModeControls" class="control-row">
-                 <label>Kvantiser til:</label>
+                 <label for="quantizeSelector">Kvantiser til:</label> {/* Lagt til for-attributt */}
                  <select id="quantizeSelector">
                     <option value="16" selected>Nærmeste 16-del</option>
                     <option value="8">Nærmeste 8-del</option>
@@ -121,13 +121,12 @@
 
         {/* === 12: INNSPILINGSPIANO START === */}
         <div class="record-piano-area">
-             {/* Vi bruker et eget canvas eller div for innspillingspiano */}
              <canvas id="recordPianoCanvas"></canvas>
         </div>
         {/* === 12: INNSPILINGSPIANO SLUTT === */}
 
         {/* === 13: JSON OUTPUT START === */}
-        <div class="json-output-area controls">
+        <div class="json-output-area controls"> {/* Gjenbruker .controls for styling */}
             <h2>Generert JSON</h2>
             <textarea id="jsonOutput" readonly rows="10" placeholder="JSON-data for sangen dukker opp her når du stopper innspillingen..."></textarea>
             <button id="copyJsonButton">Kopier JSON</button>
@@ -137,9 +136,10 @@
     </div>
     {/* === INNSPILINGSSEKSJON SLUTT === */}
 
-    {/* === 3: JAVASCRIPT REFERANSE START === */}
+    {/* === 14: JAVASCRIPT REFERANSE START === */}
+    {/* Laster scriptet til slutt */}
     <script src="script.js"></script>
-    {/* === 3: JAVASCRIPT REFERANSE SLUTT === */}
+    {/* === 14: JAVASCRIPT REFERANSE SLUTT === */}
 
 </body>
 </html>
