@@ -1,44 +1,142 @@
 // === 1: GLOBALE VARIABLER OG KONSTANTER START ===
-// ... (ingen endringer her, behold alle fra forrige versjon) ...
+// --- Faner ---
 const tabButtonPlay = document.getElementById('tabButtonPlay');
-// ... (resten av variablene)
+const tabButtonRecord = document.getElementById('tabButtonRecord');
+const playArea = document.getElementById('playArea');
+const recordArea = document.getElementById('recordArea');
 
+// --- Avspillingsområde ---
+const songSelector = document.getElementById('songSelector');
+const bpmInputElement = document.getElementById('bpmInput');
+const originalBpmSpan = document.getElementById('originalBpm');
+const playButton = document.getElementById('playButton');
+const songInfoDiv = document.getElementById('songInfo');
+const gameCanvas = document.getElementById('gameCanvas');
+const gameCtx = gameCanvas.getContext('2d');
+const volumeSlider = document.getElementById('volumeSlider');
+const muteCheckbox = document.getElementById('muteCheckbox');
+
+// --- Innspillingsområde ---
+const recordTitleInput = document.getElementById('recordTitle');
+const recordArtistInput = document.getElementById('recordArtist');
+const recordTempoInput = document.getElementById('recordTempo');
+const recordModeSelector = document.getElementById('recordModeSelector');
+const startRecordButton = document.getElementById('startRecordButton');
+const stopRecordButton = document.getElementById('stopRecordButton');
+const clearRecordButton = document.getElementById('clearRecordButton');
+const stepModeControls = document.getElementById('stepModeControls');
+const stepDurationSelector = document.getElementById('stepDurationSelector');
+const addStepNoteButton = document.getElementById('addStepNoteButton');
+const addRestButton = document.getElementById('addRestButton');
+const realtimeModeControls = document.getElementById('realtimeModeControls');
+const quantizeSelector = document.getElementById('quantizeSelector');
+const recordingStatusSpan = document.getElementById('recordingStatus');
+const recordPianoCanvas = document.getElementById('recordPianoCanvas');
+const recordPianoCtx = recordPianoCanvas.getContext('2d');
+const jsonOutputTextarea = document.getElementById('jsonOutput');
+const copyJsonButton = document.getElementById('copyJsonButton');
+
+// --- Felles/Avspillingstilstand ---
+const availableSongs = {
+    "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
+    // Bytt ut denne med den beste Pink Panther JSON-filen du fant
+    "pink_panther_theme.json": "Pink Panther Theme"
+};
+const songsFolderPath = 'songs/';
+let currentSong = null;
+let currentPlaybackBPM = 100;
+let isPlaying = false;
+let animationFrameId = null;
+let playbackStartTime = 0;
+let activeKeys = new Set(); // For highlighting under playback
+
+// --- Lydtilstand ---
+let audioContext = null;
+let masterGainNode = null;
+let isAudioInitialized = false;
+let currentVolume = 0.7;
+let isMuted = false;
+let scheduledAudioSources = []; // For stopping playback audio
+
+// --- Innspillingstilstand ---
+let isRecording = false;
+let recordingMode = 'realtime';
+let recordingStartTime = 0;
+let recordedRawNotes = []; // For potential future realtime capture
+let recordedNotes = []; // Final recorded notes [{ key, time, duration }]
+let currentStepTime = 0;
+let selectedStepNote = null; // For step mode highlighting/adding
+
+// --- Piano Konstanter ---
+const keyInfo = [ { name: "C4", type: "white", xOffset: 0 }, { name: "C#4", type: "black", xOffset: 0.7 }, { name: "D4", type: "white", xOffset: 1 }, { name: "D#4", type: "black", xOffset: 1.7 }, { name: "E4", type: "white", xOffset: 2 }, { name: "F4", type: "white", xOffset: 3 }, { name: "F#4", type: "black", xOffset: 3.7 }, { name: "G4", type: "white", xOffset: 4 }, { name: "G#4", type: "black", xOffset: 4.7 }, { name: "A4", type: "white", xOffset: 5 }, { name: "A#4", type: "black", xOffset: 5.7 }, { name: "B4", type: "white", xOffset: 6 }, { name: "C5", type: "white", xOffset: 7 }, { name: "C#5", type: "black", xOffset: 7.7 }, { name: "D5", type: "white", xOffset: 8 }, { name: "D#5", type: "black", xOffset: 8.7 }, { name: "E5", type: "white", xOffset: 9 }, { name: "F5", type: "white", xOffset: 10 }, { name: "F#5", type: "black", xOffset: 10.7 }, { name: "G5", type: "white", xOffset: 11 }, { name: "G#5", type: "black", xOffset: 11.7 }, { name: "A5", type: "white", xOffset: 12 }, { name: "A#5", type: "black", xOffset: 12.7 }, { name: "B5", type: "white", xOffset: 13 }, { name: "C6", type: "white", xOffset: 14 } ];
+const PIANO_HEIGHT_PLAY = 120;
+const PIANO_HEIGHT_RECORD = 150;
+const blackKeyWidthRatio = 0.6;
+const blackKeyHeightRatio = 0.6;
+const keyMappingPlay = {};
+const keyMappingRecord = {};
+
+// --- Spill Konstanter ---
+const PRE_ROLL_SECONDS = 3;
+const NOTE_FALL_SECONDS = 6;
+const KEY_HIGHLIGHT_COLOR = 'rgba(255, 80, 80, 0.75)';
+const WHITE_NOTE_COLOR = '#3498db';
+const BLACK_NOTE_COLOR = '#f1c40f';
+const NOTE_BORDER_COLOR = 'rgba(0, 0, 0, 0.3)';
+const NOTE_CORNER_RADIUS = 8;
+const KEY_NAME_FONT = '11px sans-serif';
+const KEY_NAME_COLOR_WHITE = 'black';
+const KEY_NAME_COLOR_BLACK = 'white';
+const RECORD_KEY_HIGHLIGHT_COLOR = 'rgba(52, 152, 219, 0.8)'; // Blå for record highlight
+
+// --- Lyd Konstanter ---
+const A4_FREQ = 440.0;
+const A4_MIDI_NUM = 69;
+const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 // === 1: GLOBALE VARIABLER OG KONSTANTER SLUTT ===
 
 
 // === 2: INITIALISERING START ===
-function initialize() { /* ... som før ... */ }
+function initialize() {
+    console.log("Initialiserer Piano Hero & Komponering...");
+    setupCanvases();
+    buildKeyMappings();
+    drawPianos(); // Draw initial state
+    populateSongSelector();
+    setupEventListeners();
+    resetUI(); // Set initial UI state for play tab
+    switchTab('play'); // Start on play tab
+    updateRecordModeUI(); // Set initial state for record controls
+}
 // === 2: INITIALISERING SLUTT ===
 
 
 // === 3: CANVAS OPPSETT START ===
-function setupCanvases() { /* ... som før ... */ }
-window.addEventListener('resize', () => { /* ... som før ... */ });
+function setupCanvases() {
+    const playContainer = document.querySelector('.game-area');
+    if (playContainer) { gameCanvas.width = playContainer.clientWidth; gameCanvas.height = playContainer.clientHeight; }
+    else { console.error("Fant ikke .game-area"); }
+
+    const recordContainer = document.querySelector('.record-piano-area');
+    if (recordContainer && recordPianoCanvas) { recordPianoCanvas.width = recordContainer.clientWidth; recordPianoCanvas.height = PIANO_HEIGHT_RECORD; }
+    else { console.error("Fant ikke .record-piano-area eller #recordPianoCanvas"); }
+     console.log(`Canvas satt opp: Game=${gameCanvas.width}x${gameCanvas.height}, Record=${recordPianoCanvas.width}x${recordPianoCanvas.height}`);
+}
+window.addEventListener('resize', () => { setupCanvases(); buildKeyMappings(); drawPianos(); });
 // === 3: CANVAS OPPSETT SLUTT ===
 
 
 // === 4: EVENT LISTENERS OG UI HÅNDTERING START ===
 function setupEventListeners() {
-    // Faner
     tabButtonPlay.addEventListener('click', () => switchTab('play'));
     tabButtonRecord.addEventListener('click', () => switchTab('record'));
 
-    // Avspilling
-    // *** MODIFISERT EVENT LISTENER FOR songSelector ***
-    songSelector.addEventListener('change', (event) => {
-        // *** HELT FØRSTE LOGG NÅR EVENTET SKJER ***
-        console.log("--- songSelector 'change' EVENT FYRTE! ---", event.target.value);
-        // Kall den faktiske håndteringsfunksjonen
-        handleSongSelect(event);
-    });
-    // *** SLUTT PÅ MODIFIKASJON ***
-
+    songSelector.addEventListener('change', handleSongSelect); // Keeping simple handler name
     bpmInputElement.addEventListener('change', handlePlaybackBpmChange);
     playButton.addEventListener('click', togglePlayback);
     volumeSlider.addEventListener('input', handleVolumeChange);
     muteCheckbox.addEventListener('change', handleMuteToggle);
 
-    // Innspilling
     recordModeSelector.addEventListener('change', handleRecordModeChange);
     startRecordButton.addEventListener('click', startRecording);
     stopRecordButton.addEventListener('click', stopRecording);
@@ -52,152 +150,164 @@ function setupEventListeners() {
     console.log("Event listeners satt opp.");
 }
 
-function switchTab(tabName) { /* ... som før ... */ }
-function updateRecordModeUI() { /* ... som før ... */ }
-function populateSongSelector() { /* ... som før ... */ }
+function switchTab(tabName) {
+    const isPlayTab = tabName === 'play';
+    playArea.classList.toggle('active', isPlayTab);
+    recordArea.classList.toggle('active', !isPlayTab);
+    tabButtonPlay.classList.toggle('active', isPlayTab);
+    tabButtonRecord.classList.toggle('active', !isPlayTab);
 
-// *** Forenklet resetUI ***
+    if (isPlayTab && isRecording) stopRecording();
+    if (!isPlayTab && isPlaying) { stopSoundPlayback(); pauseSongVisuals(); }
+    if (!isPlayTab) { // When switching TO record tab
+         // Ensure correct dimensions and draw piano
+         setupCanvases();
+         buildKeyMappings();
+         drawRecordPiano();
+    }
+    console.log("Byttet til fane:", tabName);
+}
+
+function updateRecordModeUI() {
+    recordingMode = recordModeSelector.value;
+    const isStepMode = recordingMode === 'step';
+    stepModeControls.style.display = isStepMode ? 'flex' : 'none';
+    realtimeModeControls.style.display = isStepMode ? 'none' : 'flex';
+    addStepNoteButton.disabled = !isStepMode || selectedStepNote === null;
+    addRestButton.disabled = !isStepMode; // Only enable in step mode
+}
+
+function populateSongSelector() {
+    while (songSelector.options.length > 1) songSelector.remove(1);
+    for (const filename in availableSongs) { const option = document.createElement('option'); option.value = filename; option.textContent = availableSongs[filename]; songSelector.appendChild(option); }
+}
+
+// Sets the initial state or state after song load error
 function resetUI() {
-    playButton.disabled = true;
-    playButton.textContent = "Spill av";
-    bpmInputElement.disabled = true;
-    bpmInputElement.value = 100;
-    originalBpmSpan.textContent = "";
+    playButton.disabled = true; playButton.textContent = "Spill av";
+    bpmInputElement.disabled = true; bpmInputElement.value = 100; originalBpmSpan.textContent = "";
     songInfoDiv.textContent = "Velg en sang fra menyen";
     songSelector.selectedIndex = 0;
-    songSelector.disabled = false; // *** ALLTID ENABLED HER ***
-    console.log("UI resatt. songSelector disabled:", songSelector.disabled);
+    songSelector.disabled = false; // Should be enabled initially
+    console.log("UI resatt (Play Tab).");
 }
 
 function handleSongSelect(event) {
-    console.log("--- handleSongSelect FUNKSJON START ---"); // Endret logg
     const selectedFilename = event.target.value;
-    console.log("handleSongSelect: Valgt fil:", selectedFilename);
-
+     console.log("handleSongSelect:", selectedFilename);
     activeKeys.clear();
-    if (!selectedFilename) {
-        console.log("handleSongSelect: Ingen fil valgt, nullstiller.");
-        currentSong = null;
-        resetUI(); // Kaller forenklet reset
-        resetPlayback();
-        drawPianos();
-        console.log("handleSongSelect: Nullstilling ferdig.");
-        return;
-    }
+    if (!selectedFilename) { currentSong = null; resetUI(); resetPlayback(); drawPianos(); return; }
 
-    console.log("handleSongSelect: Fil valgt, starter lasting...");
     const songPath = songsFolderPath + selectedFilename;
-    console.log(`handleSongSelect: Forsøker å laste: ${songPath}`);
     songInfoDiv.textContent = `Laster ${availableSongs[selectedFilename]}...`;
-    playButton.disabled = true;
-    bpmInputElement.disabled = true;
-    songSelector.disabled = true; // *** Deaktiver KUN under lasting ***
-    console.log("handleSongSelect: Kaller fetch (songSelector disabled: true)");
+    playButton.disabled = true; bpmInputElement.disabled = true; songSelector.disabled = true;
 
     fetch(songPath)
-        .then(response => {
-             console.log("handleSongSelect: Fetch mottok respons. Status:", response.status, "OK:", response.ok);
-             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}, statusText: ${response.statusText}`);
-             console.log("handleSongSelect: Parser JSON...");
-             return response.json();
-         })
+        .then(response => { if (!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); })
         .then(data => {
-             console.log("handleSongSelect: JSON parset vellykket.");
-             currentSong = data;
-             if (!currentSong.tempo || !currentSong.notes) throw new Error("Sangfil mangler 'tempo' eller 'notes'.");
-             console.log("handleSongSelect: Sangdata validert OK.");
-             songInfoDiv.textContent = `Klar: ${currentSong.title || availableSongs[selectedFilename]} (${currentSong.artist || 'Ukjent'})`;
-             currentPlaybackBPM = currentSong.tempo;
-             bpmInputElement.value = currentPlaybackBPM;
-             originalBpmSpan.textContent = `(Original: ${currentSong.tempo} BPM)`;
-             bpmInputElement.disabled = false;
-             playButton.disabled = false;
-             songSelector.disabled = false; // *** Aktiver igjen ***
-             console.log("handleSongSelect: UI oppdatert, kaller resetPlayback (songSelector disabled: false).");
-             resetPlayback(); // Nullstill avspillingstilstand
-             console.log("handleSongSelect: Ferdig med vellykket last.");
-         })
+            currentSong = data;
+            if (!currentSong.tempo || !currentSong.notes) throw new Error("Invalid song format.");
+            console.log("Sang lastet:", currentSong.title);
+            songInfoDiv.textContent = `Klar: ${currentSong.title} (${currentSong.artist || 'Ukjent'})`;
+            currentPlaybackBPM = currentSong.tempo; bpmInputElement.value = currentPlaybackBPM;
+            originalBpmSpan.textContent = `(Original: ${currentSong.tempo} BPM)`;
+            bpmInputElement.disabled = false; playButton.disabled = false; songSelector.disabled = false;
+            resetPlayback(); // Reset playback state for the new song
+        })
         .catch(error => {
-             console.error("handleSongSelect: FEIL i fetch-kjeden:", error);
-             songInfoDiv.textContent = `Feil: Kunne ikke laste sangen "${availableSongs[selectedFilename]}". ${error.message}`;
-             currentSong = null;
-             resetUI(); // Tilbakestill UI ved feil
-             resetPlayback();
-             drawPianos();
-             songSelector.disabled = false; // *** Aktiver også ved feil ***
-             console.log("handleSongSelect: FEIL (songSelector disabled: false)");
-         });
-    console.log("handleSongSelect: Fetch-kallet er startet (async).");
+            console.error("Feil ved lasting av sang:", error);
+            songInfoDiv.textContent = `Feil: Kunne ikke laste sang. ${error.message}`;
+            currentSong = null; resetUI(); resetPlayback(); drawPianos(); songSelector.disabled = false;
+        });
 }
 
-function handlePlaybackBpmChange(event) { /* ... som før ... */ }
-function handleVolumeChange() { /* ... som før ... */ }
-function handleMuteToggle() { /* ... som før ... */ }
+function handlePlaybackBpmChange(event) { currentPlaybackBPM = parseInt(event.target.value, 10) || 100; }
+function handleVolumeChange() { currentVolume = parseFloat(volumeSlider.value); if (masterGainNode && !isMuted) masterGainNode.gain.setValueAtTime(currentVolume, audioContext.currentTime); }
+function handleMuteToggle() { isMuted = muteCheckbox.checked; if (masterGainNode) masterGainNode.gain.setValueAtTime(isMuted ? 0 : currentVolume, audioContext.currentTime); }
 // === 4: EVENT LISTENERS OG UI HÅNDTERING SLUTT ===
 
 
 // === 5: PIANO TEGNING OG KEY MAPPING START ===
-function buildKeyMappings() { /* ... som før ... */ }
+function buildKeyMappings() { buildSpecificKeyMapping(gameCanvas, PIANO_HEIGHT_PLAY, keyMappingPlay); buildSpecificKeyMapping(recordPianoCanvas, PIANO_HEIGHT_RECORD, keyMappingRecord); }
 function buildSpecificKeyMapping(canvasElement, pianoHeightPx, mappingObject) { /* ... som før ... */ }
-function drawPianos() { /* ... som før ... */ }
+function drawPianos() { drawSpecificPiano(gameCtx, gameCanvas, PIANO_HEIGHT_PLAY, keyMappingPlay, activeKeys, KEY_HIGHLIGHT_COLOR); drawRecordPiano(); }
 function drawSpecificPiano(ctx, canvasElement, pianoHeightPx, mappingObject, activeHighlightKeys, highlightColor) { /* ... som før ... */ }
-function drawRecordPiano() { /* ... som før ... */ }
+function drawRecordPiano() { if (!recordPianoCtx) return; recordPianoCtx.clearRect(0, 0, recordPianoCanvas.width, recordPianoCanvas.height); const highlightSet = new Set(); if (recordingMode === 'step' && selectedStepNote) highlightSet.add(selectedStepNote); drawSpecificPiano( recordPianoCtx, recordPianoCanvas, PIANO_HEIGHT_RECORD, keyMappingRecord, highlightSet, RECORD_KEY_HIGHLIGHT_COLOR ); }
 // === 5: PIANO TEGNING OG KEY MAPPING SLUTT ===
 
 
 // === 6: AVSPILLINGS KONTROLL START ===
-function togglePlayback() { /* ... som før ... */ }
-function playSong() {
-    // ... (starten som før)
-    songSelector.disabled = true; // *** Deaktiver ved start ***
-    // ... (resten som før)
+async function ensureAudioInitialized() {
+    if (isAudioInitialized) return true;
+    console.log("Forsøker å initialisere AudioContext...");
+    return initAudio(); // Returnerer true/false basert på suksess
 }
-function pauseSongVisuals() {
-    console.log("pauseSongVisuals: Kjører.");
-    isPlaying = false;
-    playButton.textContent = "Spill av";
-    bpmInputElement.disabled = false;
-    songSelector.disabled = false; // *** Aktiver ved stopp/pause ***
-    console.log("pauseSongVisuals: Stopper animasjonsløkke. ID:", animationFrameId, "songSelector disabled:", songSelector.disabled);
-    if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; console.log("pauseSongVisuals: animationFrameId nullstilt."); } else { console.log("pauseSongVisuals: Ingen animationFrameId å stoppe."); }
-    activeKeys.clear();
-    drawPianos();
-    console.log("pauseSongVisuals: Visuell avspilling stoppet.");
-}
-// *** Forenklet resetPlayback ***
-function resetPlayback() {
-    console.log("resetPlayback: Kjører.");
-    // Stopp lyd og visuelt (pauseSongVisuals håndterer det meste av UI)
-    stopSoundPlayback();
-    if (isPlaying || animationFrameId) { // Bare kall pause hvis noe faktisk kjører
-        pauseSongVisuals();
+
+async function togglePlayback() {
+    if (!currentSong) return;
+    if (!await ensureAudioInitialized()) { // Vent på initialisering (hvis nødvendig)
+        console.error("Kan ikke spille av, AudioContext feilet.");
+        return;
+    }
+    // Håndter suspended state (viktig etter inaktivitet)
+    if (audioContext.state === 'suspended') {
+        await audioContext.resume();
     }
 
-    playbackStartTime = 0; // Nullstill tid
-    activeKeys.clear(); // Tøm aktive taster (gjort i pause, men for sikkerhets skyld)
+    if (isPlaying) { stopSoundPlayback(); pauseSongVisuals(); }
+    else { playSong(); }
+}
 
-    // Status på knapper etc. settes nå i pauseSongVisuals og resetUI
-    // Sjekk kun om vi har en sang for å evt. justere play-knapp
-     if (!currentSong) {
-         playButton.disabled = true;
-         bpmInputElement.disabled = true; // Også deaktiver bpm hvis ingen sang
-         console.log("resetPlayback: Ingen sang lastet.");
-     } else {
-         playButton.disabled = false;
-         bpmInputElement.disabled = false;
-         console.log("resetPlayback: Sang lastet.");
-     }
-     songSelector.disabled = false; // *** ALLTID aktivert etter reset ***
+function playSong() {
+    if (!currentSong || !audioContext) return;
+    if (isPlaying) return; // Ikke start på nytt hvis allerede spiller
 
-    if (gameCtx) gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    drawPianos(); // Tegn pianoer i korrekt (ikke-spillende) tilstand
-    console.log("resetPlayback: Avspilling nullstilt ferdig. songSelector disabled:", songSelector.disabled); // LOG status
+    isPlaying = true; playButton.textContent = "Stopp";
+    bpmInputElement.disabled = true; songSelector.disabled = true;
+
+    playbackStartTime = performance.now() + PRE_ROLL_SECONDS * 1000;
+    scheduleSongAudio(); // Planlegg lyden
+
+    if (!animationFrameId) gameLoop(); // Start visuell løkke
+     console.log("Avspilling startet.");
+}
+
+function pauseSongVisuals() {
+    isPlaying = false; playButton.textContent = "Spill av";
+    bpmInputElement.disabled = false; songSelector.disabled = false; // Aktiver kontroller
+
+    if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; }
+    activeKeys.clear();
+    drawPianos(); // Tegn pianoer i ikke-spillende tilstand
+    console.log("Visuell avspilling stoppet.");
+}
+
+function resetPlayback() { // Kalles ved sangvalg eller feil
+    stopSoundPlayback(); // Stopp alltid lyden
+    if (isPlaying || animationFrameId) { // Hvis noe kjører, stopp det visuelle også
+        pauseSongVisuals();
+    }
+    playbackStartTime = 0;
+    activeKeys.clear();
+    // UI settes i resetUI og pauseSongVisuals
+    if (gameCtx) gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Tøm spill-canvas
+    drawPianos(); // Tegn begge pianoer på nytt
+    console.log("Avspilling nullstilt.");
 }
 // === 6: AVSPILLINGS KONTROLL SLUTT ===
 
 
 // === 7: ANIMASJONSLØKKE (Avspilling) START ===
-function gameLoop() { /* ... som før ... */ }
+function gameLoop() {
+    animationFrameId = requestAnimationFrame(gameLoop); if (!isPlaying) { animationFrameId = null; return; } // Stopp løkken hvis ikke playing
+    const currentTime = performance.now(); const elapsedTimeInSeconds = (currentTime - playbackStartTime) / 1000; const beatsPerSecond = currentPlaybackBPM / 60; const currentBeat = elapsedTimeInSeconds * beatsPerSecond;
+    activeKeys.clear();
+    // gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Tømming skjer i drawSpecificPiano
+    drawFallingNotes(currentBeat); // Tegn fallende noter
+    drawPianos(); // Tegn begge pianoer (highlight påvirker kun spill)
+    // Tegn beat-teller etc. på spill-canvas
+    gameCtx.fillStyle = 'white'; gameCtx.font = '16px sans-serif'; gameCtx.textAlign = 'left'; gameCtx.fillText(`Beat: ${currentBeat.toFixed(2)}`, 10, 20); gameCtx.textAlign = 'right'; gameCtx.fillText(`BPM: ${currentPlaybackBPM}`, gameCanvas.width - 10, 20);
+}
 // === 7: ANIMASJONSLØKKE (Avspilling) SLUTT ===
 
 
@@ -212,22 +322,104 @@ initialize();
 
 
 // === 10: WEB AUDIO FUNKSJONER START ===
-function initAudio() { /* ... som før ... */ }
+function initAudio() {
+    if (isAudioInitialized) return true;
+    try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        masterGainNode = audioContext.createGain();
+        masterGainNode.connect(audioContext.destination);
+        currentVolume = parseFloat(volumeSlider.value);
+        isMuted = muteCheckbox.checked;
+        masterGainNode.gain.setValueAtTime(isMuted ? 0 : currentVolume, audioContext.currentTime);
+        isAudioInitialized = true;
+        console.log("AudioContext initialisert OK.");
+        return true; // Suksess
+    } catch (e) {
+        console.error("Web Audio API støttes ikke eller feilet.", e);
+        alert("Kunne ikke initialisere lyd.");
+        isAudioInitialized = false;
+        return false; // Feil
+    }
+}
 function noteToFrequency(noteName) { /* ... som før ... */ }
 function scheduleSongAudio() { /* ... som før ... */ }
 function stopSoundPlayback() { /* ... som før ... */ }
-function playFeedbackTone(noteName) { /* ... som før ... */ }
+function playFeedbackTone(noteName) { if (!audioContext || !masterGainNode) return; const freq = noteToFrequency(noteName); if (!freq) return; const osc = audioContext.createOscillator(); const gain = audioContext.createGain(); osc.connect(gain); gain.connect(masterGainNode); osc.type = 'sine'; osc.frequency.setValueAtTime(freq, audioContext.currentTime); gain.gain.setValueAtTime(0, audioContext.currentTime); gain.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.01); gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.2); osc.start(audioContext.currentTime); osc.stop(audioContext.currentTime + 0.25); }
 // === 10: WEB AUDIO FUNKSJONER SLUTT ===
 
 
 // === 11: INNSPILINGSFUNKSJONER START ===
-function handleRecordModeChange() { /* ... som før ... */ }
+function handleRecordModeChange() { updateRecordModeUI(); }
 function getKeyAtRecordCoords(canvas, event) { /* ... som før ... */ }
-function handleRecordPianoMouseDown(event) { /* ... som før ... */ }
-function handleRecordPianoMouseUp(event) { /* ... som før ... */ }
-function startRecording() { /* ... som før ... */ }
-function stopRecording() { /* ... som før ... */ }
-function clearRecording() { /* ... som før ... */ }
+
+async function handleRecordPianoMouseDown(event) {
+    console.log("RecordPiano MouseDown"); // Enkel logg
+    if (!await ensureAudioInitialized()) return; // Sikre lyd
+    if (audioContext.state === 'suspended') await audioContext.resume(); // Aktiver om nødvendig
+
+    const keyName = getKeyAtRecordCoords(recordPianoCanvas, event);
+    if (!keyName) return;
+
+    playFeedbackTone(keyName); // Spill feedback
+
+    if (recordingMode === 'step' && !isRecording) {
+        selectedStepNote = keyName;
+        addStepNoteButton.disabled = false;
+        drawRecordPiano(); // Oppdater highlight
+    } else if (recordingMode === 'realtime' && isRecording) {
+        // TODO: Start timer for 'keyName'
+        console.log("Realtime note ON (TODO):", keyName);
+    }
+}
+
+function handleRecordPianoMouseUp(event) {
+    console.log("RecordPiano MouseUp"); // Enkel logg
+    if (recordingMode === 'realtime' && isRecording) {
+        // TODO: Stopp timer, beregn varighet, legg til i recordedRawNotes
+        // const keyName = getKeyAtRecordCoords(recordPianoCanvas, event); // Kan være nyttig
+         console.log("Realtime note OFF (TODO)");
+    }
+}
+
+function startRecording() {
+    console.log("Start Recording trykket."); // Enkel logg
+    if (isRecording) return;
+    isRecording = true;
+    jsonOutputTextarea.value = ""; recordedRawNotes = []; recordedNotes = [];
+    currentStepTime = 0; selectedStepNote = null;
+
+    startRecordButton.disabled = true; stopRecordButton.disabled = false;
+    clearRecordButton.disabled = true; recordModeSelector.disabled = true;
+    recordTitleInput.disabled = true; recordArtistInput.disabled = true; recordTempoInput.disabled = true;
+
+    if (recordingMode === 'realtime') { recordingStartTime = performance.now(); recordingStatusSpan.textContent = "Spiller inn..."; }
+    else { recordingStatusSpan.textContent = ""; addStepNoteButton.disabled = true; addRestButton.disabled = false; drawRecordPiano(); }
+}
+
+function stopRecording() {
+     console.log("Stop Recording trykket."); // Enkel logg
+    if (!isRecording) return;
+    isRecording = false;
+
+    startRecordButton.disabled = false; stopRecordButton.disabled = true;
+    clearRecordButton.disabled = false; recordModeSelector.disabled = false;
+    recordTitleInput.disabled = false; recordArtistInput.disabled = false; recordTempoInput.disabled = false;
+    recordingStatusSpan.textContent = "";
+    addStepNoteButton.disabled = true; addRestButton.disabled = true;
+
+    if (recordingMode === 'realtime') quantizeRecordedNotes();
+    generateJsonOutput();
+    drawRecordPiano();
+}
+
+function clearRecording() {
+    console.log("Clear Recording trykket."); // Enkel logg
+    if (isRecording) stopRecording();
+    recordedRawNotes = []; recordedNotes = []; jsonOutputTextarea.value = "";
+    currentStepTime = 0; selectedStepNote = null; clearRecordButton.disabled = true;
+    drawRecordPiano();
+}
+
 function quantizeRecordedNotes() { /* ... som før (plassholder) ... */ }
 function addStepNote() { /* ... som før ... */ }
 function addStepRest() { /* ... som før ... */ }
