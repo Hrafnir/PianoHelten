@@ -7,39 +7,31 @@
     { "key": "D4", "time": 1, "duration": 0.5 },
     { "key": "E4", "time": 1.5, "duration": 0.25 },
     { "key": "F4", "time": 1.75, "duration": 0.25 },
-
     { "key": "E4", "time": 2.5, "duration": 0.25 },
     { "key": "F4", "time": 2.75, "duration": 0.25 },
     { "key": "G#4", "time": 3, "duration": 0.5 },
     { "key": "A4", "time": 3.5, "duration": 0.5 },
-
     { "key": "G#4", "time": 4, "duration": 0.25 },
     { "key": "A4", "time": 4.25, "duration": 0.25 },
     { "key": "C5", "time": 4.5, "duration": 0.25 },
     { "key": "B4", "time": 4.75, "duration": 0.25 },
-
     { "key": "E4", "time": 5, "duration": 0.5 },
     { "key": "G#4", "time": 5.5, "duration": 0.5 },
     { "key": "E4", "time": 6, "duration": 1.5 },
-
     { "key": "C#4", "time": 8.5, "duration": 0.5 },
     { "key": "D4", "time": 9, "duration": 0.5 },
     { "key": "E4", "time": 9.5, "duration": 0.25 },
     { "key": "F4", "time": 9.75, "duration": 0.25 },
-
     { "key": "E4", "time": 10.5, "duration": 0.25 },
     { "key": "F4", "time": 10.75, "duration": 0.25 },
     { "key": "G#4", "time": 11, "duration": 0.5 },
     { "key": "A4", "time": 11.5, "duration": 0.5 },
-
     { "key": "G#4", "time": 12, "duration": 0.25 },
     { "key": "A4", "time": 12.25, "duration": 0.25 },
     { "key": "C5", "time": 12.5, "duration": 0.25 },
     { "key": "B4", "time": 12.75, "duration": 0.25 },
-
     { "key": "E4", "time": 13, "duration": 0.5 },
     { "key": "G#4", "time": 13.5, "duration": 0.5 },
     { "key": "E4", "time": 14, "duration": 2 }
- 
   ]
 }
