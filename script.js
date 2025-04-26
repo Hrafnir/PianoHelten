@@ -44,17 +44,35 @@ window.addEventListener('resize', () => { /* ... Som før ... */ });
 
 // === 4: EVENT LISTENERS OG UI HÅNDTERING START ===
 function setupEventListeners() {
-    console.log("--- setupEventListeners START ---");
-    // *** TEST: Enkel window click listener ***
-    window.addEventListener('click', () => console.log('!!! Window clicked! (Test Listener) !!!'));
-    console.log("Test listener for window lagt til.");
-    // *** SLUTT PÅ TEST ***
+    console.log("--- setupEventListeners START (v. Direkte Listeners) ---");
 
-    function safeAddListener(element, eventType, handler, elementName) { if (element) { element.addEventListener(eventType, handler); } else { console.error(`FEIL: Kunne ikke finne elementet '${elementName}' for å legge til listener!`); } }
-    safeAddListener(tabButtonPlay, 'click', () => switchTab('play'), 'tabButtonPlay'); safeAddListener(tabButtonRecord, 'click', () => switchTab('record'), 'tabButtonRecord');
-    safeAddListener(songSelector, 'change', handleSongSelect, 'songSelector'); safeAddListener(bpmInputElement, 'change', handlePlaybackBpmChange, 'bpmInputElement'); safeAddListener(playButton, 'click', togglePlayback, 'playButton'); safeAddListener(volumeSlider, 'input', handleVolumeChange, 'volumeSlider'); safeAddListener(muteCheckbox, 'change', handleMuteToggle, 'muteCheckbox');
-    safeAddListener(recordModeSelector, 'change', handleRecordModeChange, 'recordModeSelector'); safeAddListener(startRecordButton, 'click', startRecording, 'startRecordButton'); safeAddListener(stopRecordButton, 'click', stopRecording, 'stopRecordButton'); safeAddListener(clearRecordButton, 'click', clearRecording, 'clearRecordButton'); safeAddListener(addStepNoteButton, 'click', addStepNote, 'addStepNoteButton'); safeAddListener(addRestButton, 'click', addStepRest, 'addRestButton'); safeAddListener(copyJsonButton, 'click', copyJsonToClipboard, 'copyJsonButton'); safeAddListener(recordPianoCanvas, 'mousedown', handleRecordPianoMouseDown, 'recordPianoCanvas'); safeAddListener(recordPianoCanvas, 'mouseup', handleRecordPianoMouseUp, 'recordPianoCanvas');
-    console.log("--- setupEventListeners FERDIG ---");
+    // *** Fjern Test Listener på window ***
+    // window.addEventListener('click', () => console.log('!!! Window clicked! (Test Listener) !!!'));
+
+    // *** Legg til listeners direkte med sjekk ***
+    if (tabButtonPlay) {
+        tabButtonPlay.addEventListener('click', () => {
+             console.log("--- tabButtonPlay CLICKED! ---"); // Logg inni listener
+             switchTab('play');
+        });
+    } else { console.error("FEIL: Kan ikke finne tabButtonPlay!"); }
+
+    if (tabButtonRecord) { tabButtonRecord.addEventListener('click', () => switchTab('record')); } else { console.error("FEIL: Kan ikke finne tabButtonRecord!"); }
+    if (songSelector) { songSelector.addEventListener('change', handleSongSelect); } else { console.error("FEIL: Kan ikke finne songSelector!"); }
+    if (bpmInputElement) { bpmInputElement.addEventListener('change', handlePlaybackBpmChange); } else { console.error("FEIL: Kan ikke finne bpmInputElement!"); }
+    if (playButton) { playButton.addEventListener('click', togglePlayback); } else { console.error("FEIL: Kan ikke finne playButton!"); }
+    if (volumeSlider) { volumeSlider.addEventListener('input', handleVolumeChange); } else { console.error("FEIL: Kan ikke finne volumeSlider!"); }
+    if (muteCheckbox) { muteCheckbox.addEventListener('change', handleMuteToggle); } else { console.error("FEIL: Kan ikke finne muteCheckbox!"); }
+    if (recordModeSelector) { recordModeSelector.addEventListener('change', handleRecordModeChange); } else { console.error("FEIL: Kan ikke finne recordModeSelector!"); }
+    if (startRecordButton) { startRecordButton.addEventListener('click', startRecording); } else { console.error("FEIL: Kan ikke finne startRecordButton!"); }
+    if (stopRecordButton) { stopRecordButton.addEventListener('click', stopRecording); } else { console.error("FEIL: Kan ikke finne stopRecordButton!"); }
+    if (clearRecordButton) { clearRecordButton.addEventListener('click', clearRecording); } else { console.error("FEIL: Kan ikke finne clearRecordButton!"); }
+    if (addStepNoteButton) { addStepNoteButton.addEventListener('click', addStepNote); } else { console.error("FEIL: Kan ikke finne addStepNoteButton!"); }
+    if (addRestButton) { addRestButton.addEventListener('click', addStepRest); } else { console.error("FEIL: Kan ikke finne addRestButton!"); }
+    if (copyJsonButton) { copyJsonButton.addEventListener('click', copyJsonToClipboard); } else { console.error("FEIL: Kan ikke finne copyJsonButton!"); }
+    if (recordPianoCanvas) { recordPianoCanvas.addEventListener('mousedown', handleRecordPianoMouseDown); recordPianoCanvas.addEventListener('mouseup', handleRecordPianoMouseUp); } else { console.error("FEIL: Kan ikke finne recordPianoCanvas!"); }
+
+    console.log("--- setupEventListeners FERDIG (v. Direkte Listeners) ---");
 }
 function switchTab(tabName) { /* ... Som før ... */ }
 function updateRecordModeUI() { /* ... Som før ... */ }
@@ -65,7 +83,6 @@ function handlePlaybackBpmChange(event) { /* ... Som før ... */ }
 function handleVolumeChange() { /* ... Som før ... */ }
 function handleMuteToggle() { /* ... Som før ... */ }
 // === 4: EVENT LISTENERS OG UI HÅNDTERING SLUTT ===
-
 
 // === 5: PIANO TEGNING OG KEY MAPPING START ===
 function buildKeyMappings() { /* ... Som før ... */ }
