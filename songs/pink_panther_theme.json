@@ -3,2066 +3,816 @@
   "artist": "Henry Mancini",
   "tempo": 116,
   
-  "notes": [
-    {
-      "key": "C#2",
-      "time": 0.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#3",
-      "time": 0.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 0.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 0.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D3",
-      "time": 0.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 0.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 1.0,
-      "duration": 0.25
-    },
+"notes": [
     {
       "key": "D#3",
-      "time": 1.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 1.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 1.3333,
-      "duration": 6.25
+      "time": 3.6667,
+      "duration": 0.3333
     },
     {
       "key": "E3",
-      "time": 1.3333,
-      "duration": 6.25
+      "time": 4.0,
+      "duration": 0.3333
     },
     {
-      "key": "B2",
-      "time": 1.3333,
-      "duration": 6.25
+      "key": "F#3",
+      "time": 5.6667,
+      "duration": 0.3333
     },
     {
-      "key": "C#2",
-      "time": 8.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#3",
-      "time": 8.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 8.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 8.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D3",
-      "time": 8.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 8.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 9.0,
-      "duration": 0.25
+      "key": "G3",
+      "time": 6.0,
+      "duration": 0.3333
     },
     {
       "key": "D#3",
-      "time": 9.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 9.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 9.3333,
-      "duration": 6.25
+      "time": 7.6667,
+      "duration": 0.3333
     },
     {
       "key": "E3",
-      "time": 9.3333,
-      "duration": 6.25
+      "time": 8.0,
+      "duration": 0.3333
     },
     {
-      "key": "B2",
-      "time": 9.3333,
-      "duration": 6.25
+      "key": "F#3",
+      "time": 8.6667,
+      "duration": 0.3333
     },
     {
-      "key": "D#2",
-      "time": 16.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#3",
-      "time": 16.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 16.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 16.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D3",
-      "time": 16.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 16.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 17.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#3",
-      "time": 17.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 17.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 17.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C3",
-      "time": 17.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 17.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 24.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#3",
-      "time": 24.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 24.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 24.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D3",
-      "time": 24.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 24.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 25.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#3",
-      "time": 25.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 25.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 25.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "E3",
-      "time": 25.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 25.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 32.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 32.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 32.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 32.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 33.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 33.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 33.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 33.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 40.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 40.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 40.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 40.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 41.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 41.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 41.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 41.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 48.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 48.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 48.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 48.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 49.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 49.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 49.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 49.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D2",
-      "time": 56.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 56.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 56.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 56.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 57.0,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 57.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F2",
-      "time": 57.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C3",
-      "time": 57.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 64.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 64.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 64.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 64.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 65.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 65.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 65.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 65.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 72.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 72.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 72.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 72.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 73.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 73.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 73.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 73.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 80.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 80.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 80.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 80.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 81.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 81.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 81.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 81.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 89.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 89.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 96.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 96.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 96.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 96.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 97.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 97.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 97.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 97.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 104.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 104.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 104.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 104.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 105.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 105.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 105.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 105.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 112.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 112.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 112.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 112.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 113.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 113.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 113.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 113.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 120.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 120.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 120.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 120.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 121.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 121.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 121.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 121.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 128.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 128.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 128.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 128.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 129.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 129.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 129.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 129.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D2",
-      "time": 136.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 136.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 136.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 136.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 137.0,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 137.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C3",
-      "time": 137.25,
-      "duration": 6.25
-    },
-    {
-      "key": "F2",
-      "time": 137.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 144.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 144.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 144.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 144.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 145.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 145.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 145.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 145.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "F#1",
-      "time": 151.75,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 152.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 152.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 152.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 152.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 153.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 153.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 153.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 153.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "A#2",
-      "time": 154.5,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 160.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 160.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 160.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 160.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 161.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 161.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 161.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 161.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 164.25,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 169.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 169.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 176.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 176.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 176.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 176.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 177.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 177.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 177.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 177.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 184.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 184.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 184.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 184.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 185.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 185.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 185.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 185.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 192.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 192.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 192.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 192.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 193.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 193.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 193.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 193.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D4",
-      "time": 197.75,
-      "duration": 0.25
-    },
-    {
-      "key": "F#4",
-      "time": 199.25,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 200.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 200.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 200.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 200.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C5",
-      "time": 201.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 201.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 201.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 201.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 201.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "F#4",
-      "time": 202.25,
-      "duration": 0.25
+      "key": "G3",
+      "time": 9.0,
+      "duration": 0.3333
     },
     {
       "key": "C4",
-      "time": 203.75,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 208.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 208.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 208.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 208.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 209.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 209.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 209.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 209.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "A4",
-      "time": 214.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#5",
-      "time": 214.5,
-      "duration": 0.25
-    },
-    {
-      "key": "B4",
-      "time": 215.5,
-      "duration": 0.25
-    },
-    {
-      "key": "D#4",
-      "time": 215.75,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 216.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 216.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#5",
-      "time": 216.25,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 216.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 216.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D5",
-      "time": 216.5,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 216.75,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 217.0,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 217.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F2",
-      "time": 217.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C3",
-      "time": 217.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D5",
-      "time": 218.5,
-      "duration": 0.25
-    },
-    {
-      "key": "A#5",
-      "time": 219.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F5",
-      "time": 219.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E5",
-      "time": 219.25,
-      "duration": 0.25
-    },
-    {
-      "key": "A5",
-      "time": 219.75,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 224.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 224.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 224.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 224.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 225.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 225.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 225.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 225.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B4",
-      "time": 229.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#5",
-      "time": 230.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F5",
-      "time": 230.75,
-      "duration": 0.25
-    },
-    {
-      "key": "G#5",
-      "time": 231.5,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 232.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 232.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A5",
-      "time": 232.25,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 232.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 232.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 233.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 233.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 233.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 233.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "F5",
-      "time": 235.75,
-      "duration": 0.25
-    },
-    {
-      "key": "C5",
-      "time": 236.25,
-      "duration": 0.25
-    },
-    {
-      "key": "A#4",
-      "time": 236.5,
-      "duration": 0.25
-    },
-    {
-      "key": "F#4",
-      "time": 237.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 240.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 240.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 240.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 240.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 241.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 241.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 241.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 241.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C5",
-      "time": 244.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F4",
-      "time": 245.5,
-      "duration": 0.25
-    },
-    {
-      "key": "C#4",
-      "time": 246.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D4",
-      "time": 247.5,
-      "duration": 0.25
-    },
-    {
-      "key": "D4",
-      "time": 249.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 249.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 249.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#4",
-      "time": 250.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#4",
-      "time": 250.75,
-      "duration": 0.25
-    },
-    {
-      "key": "D#5",
-      "time": 253.75,
-      "duration": 0.25
-    },
-    {
-      "key": "C4",
-      "time": 254.75,
-      "duration": 0.25
-    },
-    {
-      "key": "F5",
-      "time": 255.75,
-      "duration": 0.25
-    },
-    {
-      "key": "D#5",
-      "time": 256.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 256.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 256.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 256.25,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 256.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 256.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 256.75,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 257.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 257.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 257.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 257.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G#5",
-      "time": 258.25,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 258.75,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 259.25,
-      "duration": 0.25
-    },
-    {
-      "key": "G#4",
-      "time": 260.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C#5",
-      "time": 260.5,
-      "duration": 0.25
-    },
-    {
-      "key": "F#4",
-      "time": 261.25,
-      "duration": 0.25
-    },
-    {
-      "key": "E4",
-      "time": 261.25,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 262.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E5",
-      "time": 262.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 264.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 264.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C5",
-      "time": 264.25,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 264.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 264.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "F4",
-      "time": 264.5,
-      "duration": 0.25
-    },
-    {
-      "key": "G#5",
-      "time": 265.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 265.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 265.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E5",
-      "time": 265.25,
-      "duration": 0.25
-    },
-    {
-      "key": "E4",
-      "time": 265.25,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 265.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 265.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#4",
-      "time": 265.75,
-      "duration": 0.25
-    },
-    {
-      "key": "D#5",
-      "time": 266.25,
-      "duration": 0.25
-    },
-    {
-      "key": "G#4",
-      "time": 267.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G4",
-      "time": 267.25,
-      "duration": 0.25
-    },
-    {
-      "key": "F4",
-      "time": 268.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#5",
-      "time": 270.25,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 272.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 272.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 272.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 272.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 273.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 273.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 273.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 273.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 280.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 280.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 280.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 280.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 281.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 281.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 281.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 281.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 288.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 288.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 288.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 288.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 289.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 289.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 289.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 289.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D2",
-      "time": 296.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 296.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 296.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 296.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 297.0,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 297.0,
-      "duration": 0.25
-    },
-    {
-      "key": "F2",
-      "time": 297.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C3",
-      "time": 297.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 304.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 304.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 304.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 304.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 305.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 305.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 305.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 305.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 312.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 312.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 312.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 312.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 313.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 313.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 313.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 313.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 320.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 320.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 320.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 320.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 321.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 321.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 321.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "B2",
-      "time": 321.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 329.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "B2",
-      "time": 329.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "D#2",
-      "time": 336.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 336.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 336.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 336.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "C#2",
-      "time": 337.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 337.0,
-      "duration": 0.25
-    },
-    {
-      "key": "C2",
-      "time": 337.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "G2",
-      "time": 337.3333,
-      "duration": 6.25
-    },
-    {
-      "key": "C#2",
-      "time": 344.0,
-      "duration": 0.25
-    },
-    {
-      "key": "G#2",
-      "time": 344.0,
-      "duration": 0.25
-    },
-    {
-      "key": "D2",
-      "time": 344.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "A2",
-      "time": 344.3333,
-      "duration": 0.25
-    },
-    {
-      "key": "D#2",
-      "time": 345.0,
-      "duration": 0.25
-    },
-    {
-      "key": "A#2",
-      "time": 345.0,
-      "duration": 0.25
-    },
-    {
-      "key": "E2",
-      "time": 345.3333,
-      "duration": 4.0
-    },
-    {
-      "key": "B2",
-      "time": 345.3333,
-      "duration": 5.0
-    },
-    {
-      "key": "E2",
-      "time": 349.3333,
-      "duration": 1.0
-    },
-    {
-      "key": "B1",
-      "time": 350.3333,
-      "duration": 0.5
-    },
-    {
-      "key": "E1",
-      "time": 351.3333,
-      "duration": 0.5
-    },
-    {
-      "key": "G4",
-      "time": 352.375,
-      "duration": 8.9583
+      "time": 9.6667,
+      "duration": 0.3333
     },
     {
       "key": "B3",
-      "time": 352.375,
-      "duration": 8.9583
+      "time": 10.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 10.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 11.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 11.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#3",
+      "time": 12.0,
+      "duration": 2.3333
+    },
+    {
+      "key": "A3",
+      "time": 14.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 14.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 15.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 15.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 15.6667,
+      "duration": 3.3333
+    },
+    {
+      "key": "D#3",
+      "time": 19.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 20.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#3",
+      "time": 21.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 22.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#3",
+      "time": 23.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 24.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#3",
+      "time": 24.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 25.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "C4",
+      "time": 25.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 26.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 26.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 27.0,
+      "duration": 0.3333
     },
     {
       "key": "E4",
-      "time": 352.375,
-      "duration": 8.9583
+      "time": 27.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#4",
+      "time": 28.0,
+      "duration": 7.0
+    },
+    {
+      "key": "D#3",
+      "time": 35.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 36.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#3",
+      "time": 37.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 38.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#3",
+      "time": 39.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 40.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#3",
+      "time": 40.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 41.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "C4",
+      "time": 41.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 42.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 42.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 43.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 43.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#3",
+      "time": 44.0,
+      "duration": 2.3333
+    },
+    {
+      "key": "A3",
+      "time": 46.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 46.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 47.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 47.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 47.6667,
+      "duration": 3.3333
+    },
+    {
+      "key": "E4",
+      "time": 53.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "D4",
+      "time": 53.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 54.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "A3",
+      "time": 54.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 55.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 55.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#3",
+      "time": 56.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 56.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 57.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 57.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 58.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 58.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 59.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 59.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "G3",
+      "time": 60.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 60.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 60.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 61.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 61.6667,
+      "duration": 6.3333
+    },
+    {
+      "key": "G3",
+      "time": 68.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 68.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 68.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 69.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 69.6667,
+      "duration": 6.3333
+    },
+    {
+      "key": "G3",
+      "time": 76.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 76.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 76.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 77.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 77.6667,
+      "duration": 5.3333
+    },
+    {
+      "key": "D#4",
+      "time": 83.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 84.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 85.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 86.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#4",
+      "time": 87.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 88.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 88.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 89.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "C5",
+      "time": 89.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 90.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 90.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 91.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 91.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#4",
+      "time": 92.0,
+      "duration": 2.3333
+    },
+    {
+      "key": "A4",
+      "time": 94.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 94.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 95.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D4",
+      "time": 95.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 95.6667,
+      "duration": 3.3333
+    },
+    {
+      "key": "D#4",
+      "time": 99.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 100.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 101.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 102.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#4",
+      "time": 103.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 104.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 104.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 105.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "C5",
+      "time": 105.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 106.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 106.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 107.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E5",
+      "time": 107.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#5",
+      "time": 108.0,
+      "duration": 7.0
+    },
+    {
+      "key": "D#4",
+      "time": 115.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 116.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 117.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 118.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D#4",
+      "time": 119.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 120.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "F#4",
+      "time": 120.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 121.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "C5",
+      "time": 121.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 122.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 122.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 123.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "B4",
+      "time": 123.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#4",
+      "time": 124.0,
+      "duration": 2.3333
+    },
+    {
+      "key": "A4",
+      "time": 126.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "G4",
+      "time": 126.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 127.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "D4",
+      "time": 127.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "E4",
+      "time": 127.6667,
+      "duration": 3.3333
+    },
+    {
+      "key": "E4",
+      "time": 133.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "D4",
+      "time": 133.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "B3",
+      "time": 134.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "A3",
+      "time": 134.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "G3",
+      "time": 135.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 135.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "A#3",
+      "time": 136.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 136.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 137.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 137.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 138.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 138.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "A#3",
+      "time": 139.0,
+      "duration": 0.1667
+    },
+    {
+      "key": "A3",
+      "time": 139.1667,
+      "duration": 0.8333
+    },
+    {
+      "key": "G3",
+      "time": 140.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 140.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 140.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 141.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 141.6667,
+      "duration": 6.3333
+    },
+    {
+      "key": "G3",
+      "time": 148.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 148.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 148.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 149.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 149.6667,
+      "duration": 6.3333
+    },
+    {
+      "key": "G3",
+      "time": 156.0,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 156.3333,
+      "duration": 0.3333
+    },
+    {
+      "key": "D3",
+      "time": 156.6667,
+      "duration": 0.3333
+    },
+    {
+      "key": "E3",
+      "time": 157.0,
+      "duration": 0.6667
+    },
+    {
+      "key": "E3",
+      "time": 157.6667,
+      "duration": 5.3333
     }
   ]
 }
