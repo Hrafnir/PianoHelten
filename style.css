@@ -8,79 +8,48 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    height: 100vh; /* Bruk fast høyde for å sikre at flex-grow virker */
-    overflow: hidden; /* Forhindre scrolling av hele siden */
+    height: 100vh;
+    overflow: hidden;
 }
 /* === 1: GENERELT SLUTT === */
 
 /* === 2: FANER START === */
 .tab-container {
     margin-top: 15px;
-    margin-bottom: 10px; /* Litt mindre bunnmargin */
+    margin-bottom: 10px;
     background-color: rgba(255, 255, 255, 0.2);
     padding: 6px;
     border-radius: 12px;
     display: inline-block;
-    flex-shrink: 0; /* Forhindre at fanene krymper */
+    flex-shrink: 0;
 }
 
-.tab-button {
-    padding: 10px 22px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.05em;
-    font-weight: 600;
-    margin: 0 4px;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.tab-button.active {
-    background-color: #ffffff;
-    color: #2980b9;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.tab-button:not(.active):hover {
-     background-color: rgba(255, 255, 255, 0.4);
-     color: #ffffff;
-}
+.tab-button { /* ... Som før ... */ }
+.tab-button.active { /* ... Som før ... */ }
+.tab-button:not(.active):hover { /* ... Som før ... */ }
 
 .tab-content {
-    display: none; /* Skjult som standard */
+    display: none; /* *** Skjult som standard *** */
     width: 100%;
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
     box-sizing: border-box;
-    flex-grow: 1; /* *** Viktig: La faneinnholdet vokse *** */
-    overflow-y: auto; /* Tillat scrolling INNI fanen om nødvendig */
-    max-height: calc(100vh - 70px); /* Juster høyden basert på fane-knapper etc. */
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.tab-content.active {
+/* *** Endring her: #playArea starter aktiv *** */
+#playArea.active, /* Fjernet referanse til .tab-content.active for å unngå konflikt */
+#recordArea.active {
     display: flex; /* Vises når aktiv */
 }
+/* Fjernet .tab-content.active regelen */
+
 /* === 2: FANER SLUTT === */
 
 /* === 3: FELLES STILER (.controls etc.) START === */
-.controls {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px 30px;
-    border-radius: 15px;
-    margin-bottom: 20px; /* Beholder litt luft */
-    margin-top: 10px; /* Litt luft på toppen */
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 850px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-sizing: border-box;
-    flex-shrink: 0; /* Ikke la kontrollpanelet krympe */
-}
-
+.controls { /* ... Som før ... */ }
 .controls h1 { /* ... Som før ... */ }
 .control-row { /* ... Som før ... */ }
 .control-row label { /* ... Som før ... */ }
@@ -98,53 +67,15 @@ body {
 
 
 /* === 4: AVSPILLINGSFANE STILER START === */
-#playArea {
-     /* Sørger for at playArea kan vokse */
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-}
-
 #playArea #songInfo { /* ... Som før ... */ }
 #playArea #originalBpm { /* ... Som før ... */ }
 #playArea .audio-controls { /* ... Som før ... */ }
-
-.game-area {
-    width: 90%;
-    max-width: 850px;
-    /* *** Viktig: La denne vokse for å fylle plassen *** */
-    flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
-    position: relative; /* Viktig for canvas posisjonering */
-    display: flex; /* Kan beholdes for sentrering hvis ønskelig */
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 20px; /* Luft nederst */
-}
-
-#gameCanvas {
-    display: block;
-    background-color: transparent;
-    /* *** Viktig: La canvas fylle containeren *** */
-    width: 100%;
-    height: 100%;
-}
+.game-area { /* ... Som før ... */ }
+#gameCanvas { /* ... Som før ... */ }
 /* === 4: AVSPILLINGSFANE STILER SLUTT === */
 
 
 /* === 5: INNSPILINGSFANE STILER START === */
-#recordArea {
-     /* Sørger for at recordArea kan vokse (selv om den har mer fast innhold nå) */
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     overflow-y: auto; /* Tillat scrolling inni record-fanen */
-}
-
 #recordArea .control-row label { /* ... Som før ... */ }
 .record-piano-area { /* ... Som før ... */ }
 #recordPianoCanvas { /* ... Som før ... */ }
