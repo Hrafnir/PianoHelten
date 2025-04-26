@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano Hero Øving</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === 1: KONTROLLPANEL START === -->
+    <div class="controls">
+        <h1>Piano Hero Øving</h1>
+        <input type="file" id="songFileInput" accept=".json">
+        <button id="playButton">Spill av</button>
+        <div id="songInfo">Ingen sang lastet</div>
+    </div>
+    <!-- === 1: KONTROLLPANEL SLUTT === -->
+
+    <!-- === 2: SPILLOMRÅDE START === -->
+    <div class="game-area">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    <!-- === 2: SPILLOMRÅDE SLUTT === -->
+
+    <!-- === 3: JAVASCRIPT REFERANSE START === -->
+    <!-- Vi laster scriptet til slutt slik at HTML-elementene er klare når scriptet kjører -->
+    <script src="script.js"></script>
+    <!-- === 3: JAVASCRIPT REFERANSE SLUTT === -->
+
+</body>
+</html>
