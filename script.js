@@ -40,7 +40,7 @@ const copyJsonButton = document.getElementById('copyJsonButton');
 const availableSongs = {
     "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
     "odetojoy.json": "Ode to Joy (Beethoven)",
-    "pink_panther_theme.json": "Pink Panther Theme"
+    "pink_panther_theme.json": "Pink Panther Theme (fra MIDI)" // Bruk navnet som reflekterer kilden
 };
 const songsFolderPath = 'songs/';
 let currentSong = null;
@@ -68,7 +68,43 @@ let currentStepTime = 0;
 let selectedStepNote = null;
 
 // --- Piano Konstanter ---
-const keyInfo = [ { name: "C4", type: "white", xOffset: 0 }, { name: "C#4", type: "black", xOffset: 0.7 }, { name: "D4", type: "white", xOffset: 1 }, { name: "D#4", type: "black", xOffset: 1.7 }, { name: "E4", type: "white", xOffset: 2 }, { name: "F4", type: "white", xOffset: 3 }, { name: "F#4", type: "black", xOffset: 3.7 }, { name: "G4", type: "white", xOffset: 4 }, { name: "G#4", type: "black", xOffset: 4.7 }, { name: "A4", type: "white", xOffset: 5 }, { name: "A#4", type: "black", xOffset: 5.7 }, { name: "B4", type: "white", xOffset: 6 }, { name: "C5", type: "white", xOffset: 7 }, { name: "C#5", type: "black", xOffset: 7.7 }, { name: "D5", type: "white", xOffset: 8 }, { name: "D#5", type: "black", xOffset: 8.7 }, { name: "E5", type: "white", xOffset: 9 }, { name: "F5", type: "white", xOffset: 10 }, { name: "F#5", type: "black", xOffset: 10.7 }, { name: "G5", type: "white", xOffset: 11 }, { name: "G#5", type: "black", xOffset: 11.7 }, { name: "A5", type: "white", xOffset: 12 }, { name: "A#5", type: "black", xOffset: 12.7 }, { name: "B5", type: "white", xOffset: 13 }, { name: "C6", type: "white", xOffset: 14 } ];
+// *** UTVIDET keyInfo med Oktav 2 og 3 ***
+const keyInfo = [
+    // Oktav 2
+    { name: "C2", type: "white", xOffset: -14 }, { name: "C#2", type: "black", xOffset: -13.3 },
+    { name: "D2", type: "white", xOffset: -13 }, { name: "D#2", type: "black", xOffset: -12.3 },
+    { name: "E2", type: "white", xOffset: -12 },
+    { name: "F2", type: "white", xOffset: -11 }, { name: "F#2", type: "black", xOffset: -10.3 },
+    { name: "G2", type: "white", xOffset: -10 }, { name: "G#2", type: "black", xOffset: -9.3 },
+    { name: "A2", type: "white", xOffset: -9 }, { name: "A#2", type: "black", xOffset: -8.3 },
+    { name: "B2", type: "white", xOffset: -8 },
+    // Oktav 3
+    { name: "C3", type: "white", xOffset: -7 }, { name: "C#3", type: "black", xOffset: -6.3 },
+    { name: "D3", type: "white", xOffset: -6 }, { name: "D#3", type: "black", xOffset: -5.3 },
+    { name: "E3", type: "white", xOffset: -5 },
+    { name: "F3", type: "white", xOffset: -4 }, { name: "F#3", type: "black", xOffset: -3.3 },
+    { name: "G3", type: "white", xOffset: -3 }, { name: "G#3", type: "black", xOffset: -2.3 },
+    { name: "A3", type: "white", xOffset: -2 }, { name: "A#3", type: "black", xOffset: -1.3 },
+    { name: "B3", type: "white", xOffset: -1 },
+    // Oktav 4 (som før)
+    { name: "C4", type: "white", xOffset: 0 }, { name: "C#4", type: "black", xOffset: 0.7 },
+    { name: "D4", type: "white", xOffset: 1 }, { name: "D#4", type: "black", xOffset: 1.7 },
+    { name: "E4", type: "white", xOffset: 2 },
+    { name: "F4", type: "white", xOffset: 3 }, { name: "F#4", type: "black", xOffset: 3.7 },
+    { name: "G4", type: "white", xOffset: 4 }, { name: "G#4", type: "black", xOffset: 4.7 },
+    { name: "A4", type: "white", xOffset: 5 }, { name: "A#4", type: "black", xOffset: 5.7 },
+    { name: "B4", type: "white", xOffset: 6 },
+    // Oktav 5 (som før)
+    { name: "C5", type: "white", xOffset: 7 }, { name: "C#5", type: "black", xOffset: 7.7 },
+    { name: "D5", type: "white", xOffset: 8 }, { name: "D#5", type: "black", xOffset: 8.7 },
+    { name: "E5", type: "white", xOffset: 9 },
+    { name: "F5", type: "white", xOffset: 10 }, { name: "F#5", type: "black", xOffset: 10.7 },
+    { name: "G5", type: "white", xOffset: 11 }, { name: "G#5", type: "black", xOffset: 11.7 },
+    { name: "A5", type: "white", xOffset: 12 }, { name: "A#5", type: "black", xOffset: 12.7 },
+    { name: "B5", type: "white", xOffset: 13 },
+    // Oktav 6 (som før)
+    { name: "C6", type: "white", xOffset: 14 }
+];
 const PIANO_HEIGHT_PLAY = 120;
 const PIANO_HEIGHT_RECORD = 150;
 const blackKeyWidthRatio = 0.6;
