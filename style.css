@@ -1,15 +1,19 @@
 /* === 1: GENERELT START === */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html, body {
+    height: 100%; /* Sørg for at html og body dekker hele høyden */
     margin: 0;
     padding: 0;
+    overflow: hidden; /* Forhindre scrolling av hele siden */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #6dd5ed, #2193b0);
     color: #333;
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Bruk flexbox for hovedlayout */
+    flex-direction: column; /* Organiser vertikalt */
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    /* height: 100vh; */ /* Satt på html, body */
 }
 /* === 1: GENERELT SLUTT === */
 
@@ -21,68 +25,105 @@ body {
     padding: 6px;
     border-radius: 12px;
     display: inline-block;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Ikke la fanene krympe */
 }
 
-.tab-button { /* ... Som før ... */ }
-.tab-button.active { /* ... Som før ... */ }
-.tab-button:not(.active):hover { /* ... Som før ... */ }
+.tab-button { padding: 10px 22px; border: none; border-radius: 8px; cursor: pointer; background-color: transparent; color: rgba(255, 255, 255, 0.8); font-size: 1.05em; font-weight: 600; margin: 0 4px; transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; }
+.tab-button.active { background-color: #ffffff; color: #2980b9; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); }
+.tab-button:not(.active):hover { background-color: rgba(255, 255, 255, 0.4); color: #ffffff; }
 
 .tab-content {
-    display: none; /* *** Skjult som standard *** */
-    width: 100%;
+    display: none; /* Skjult som standard */
+    width: 100%; /* Ta full bredde */
+    flex-grow: 1; /* *** La faneinnholdet fylle resten av body *** */
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
     box-sizing: border-box;
-    flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Scroll internt om nødvendig */
+    /* Fjernet max-height, flex-grow styrer */
 }
 
-/* *** Endring her: #playArea starter aktiv *** */
-#playArea.active, /* Fjernet referanse til .tab-content.active for å unngå konflikt */
-#recordArea.active {
+.tab-content.active {
     display: flex; /* Vises når aktiv */
 }
-/* Fjernet .tab-content.active regelen */
-
 /* === 2: FANER SLUTT === */
 
 /* === 3: FELLES STILER (.controls etc.) START === */
-.controls { /* ... Som før ... */ }
-.controls h1 { /* ... Som før ... */ }
-.control-row { /* ... Som før ... */ }
-.control-row label { /* ... Som før ... */ }
-.controls select, .controls input[type="number"], .controls input[type="text"], .controls button, .controls input[type="range"], .controls input[type="checkbox"] { /* ... Som før ... */ }
-.controls input[type="text"]{ /* ... Som før ... */ }
-.controls select:focus, .controls input:not([type="checkbox"]):not([type="range"]):focus { /* ... Som før ... */ }
-.controls input[type="range"]:focus{ /* ... Som før ... */ }
-.controls select { /* ... Som før ... */ } .controls input[type="number"] { /* ... Som før ... */ } .controls input[type="range"] { /* ... Som før ... */ } .controls input[type="checkbox"] { /* ... Som før ... */ }
-.mute-label, .controls label:has(> input[type="checkbox"]) { /* ... Som før ... */ }
-.controls button { /* ... Som før ... */ }
-.controls button:hover:not(:disabled) { /* ... Som før ... */ }
-.controls button:active:not(:disabled) { /* ... Som før ... */ }
-.controls button:disabled { /* ... Som før ... */ }
+.controls {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-top: 15px; /* Margin topp */
+    margin-bottom: 15px; /* Margin bunn */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 850px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    flex-shrink: 0; /* Ikke la controls krympe */
+}
+
+.controls h1 { margin-top: 0; margin-bottom: 25px; font-size: 2em; color: #2c3e50; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); text-align: center; }
+.control-row { margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 18px; }
+.control-row label { font-weight: 600; margin-right: 6px; flex-shrink: 0; color: #34495e; }
+.controls select, .controls input[type="number"], .controls input[type="text"], .controls button, .controls input[type="range"], .controls input[type="checkbox"] { padding: 10px 15px; border: 1px solid #bdc3c7; border-radius: 8px; font-size: 1em; vertical-align: middle; background-color: #fff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.controls input[type="text"]{ flex-grow: 1; min-width: 120px; }
+.controls select:focus, .controls input:not([type="checkbox"]):not([type="range"]):focus { border-color: #3498db; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); outline: none; }
+.controls input[type="range"]:focus{ outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); }
+.controls select { min-width: 180px; cursor: pointer; } .controls input[type="number"] { width: 80px; text-align: right; } .controls input[type="range"] { cursor: pointer; padding: 0; width: 140px; accent-color: #3498db; vertical-align: middle; height: 20px; } .controls input[type="checkbox"] { cursor: pointer; margin-right: 6px; transform: scale(1.3); padding: 0; accent-color: #3498db; width: 16px; height: 16px; }
+.mute-label, .controls label:has(> input[type="checkbox"]) { display: inline-flex; align-items: center; cursor: pointer; font-weight: normal; color: #34495e; }
+.controls button { cursor: pointer; background-color: #3498db; color: white; border: none; font-weight: bold; padding: 10px 20px; transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+.controls button:hover:not(:disabled) { background-color: #2980b9; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+.controls button:active:not(:disabled) { transform: translateY(0px); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+.controls button:disabled { background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; transform: none; opacity: 0.7; }
 /* === 3: FELLES STILER SLUTT === */
 
 
 /* === 4: AVSPILLINGSFANE STILER START === */
-#playArea #songInfo { /* ... Som før ... */ }
-#playArea #originalBpm { /* ... Som før ... */ }
-#playArea .audio-controls { /* ... Som før ... */ }
-.game-area { /* ... Som før ... */ }
-#gameCanvas { /* ... Som før ... */ }
+#playArea {
+    /* Behøver ikke egne flex-regler hvis .tab-content fungerer */
+}
+#playArea #songInfo { font-style: normal; color: #7f8c8d; width: 100%; text-align: center; min-height: 1.2em; margin-top: 8px; order: 99; }
+#playArea #originalBpm { font-size: 0.9em; color: #7f8c8d; }
+#playArea .audio-controls { border: none; padding-top: 5px; }
+
+.game-area {
+    width: 90%;
+    max-width: 850px;
+    flex-grow: 1; /* *** Viktig: Skal vokse *** */
+    /* Min høyde for å sikre synlighet selv om flex feiler? */
+    min-height: 200px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+    position: relative;
+    display: flex; /* Viktig for å la canvas fylle området */
+    border-radius: 12px;
+    overflow: hidden; /* Skjul innhold som går utenfor */
+    margin-bottom: 20px;
+}
+
+#gameCanvas {
+    display: block;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+}
 /* === 4: AVSPILLINGSFANE STILER SLUTT === */
 
 
 /* === 5: INNSPILINGSFANE STILER START === */
-#recordArea .control-row label { /* ... Som før ... */ }
-.record-piano-area { /* ... Som før ... */ }
-#recordPianoCanvas { /* ... Som før ... */ }
-.json-output-area { /* ... Som før ... */ }
-#jsonOutput { /* ... Som før ... */ }
-#copyJsonButton{ /* ... Som før ... */ }
-#copyJsonButton:hover:not(:disabled){ /* ... Som før ... */ }
-#stepModeControls button:disabled { /* ... Som før ... */ }
-#recordingStatus { /* ... Som før ... */ }
+#recordArea {
+     /* overflow-y: auto; */ /* Flyttet til .tab-content */
+}
+#recordArea .control-row label { white-space: nowrap; }
+.record-piano-area { width: 90%; max-width: 850px; margin-bottom: 20px; background-color: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 15px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); flex-shrink: 0; /* Ikke la denne krympe */ }
+#recordPianoCanvas { display: block; width: 100%; height: 150px; background-color: #444; border-radius: 8px; cursor: pointer; }
+.json-output-area { margin-top: 0; flex-shrink: 0; /* Ikke la denne krympe */ }
+#jsonOutput { width: 100%; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-size: 0.95em; line-height: 1.4; border-radius: 8px; border: 1px solid #bdc3c7; background-color: #eef1f2; color: #2c3e50; padding: 15px; resize: vertical; margin-bottom: 15px; min-height: 120px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
+#copyJsonButton{ background-color: #2ecc71; padding: 10px 25px; }
+#copyJsonButton:hover:not(:disabled){ background-color: #27ae60; }
+#stepModeControls button:disabled { background-color: #ecf0f1; color: #bdc3c7; opacity: 0.8; }
+#recordingStatus { min-width: 100px; display: inline-block; }
 /* === 5: INNSPILINGSFANE STILER SLUTT === */
