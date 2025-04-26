@@ -21,7 +21,6 @@
     { "key": "E4", "time": 5, "duration": 0.5 },
     { "key": "G#4", "time": 5.5, "duration": 0.5 },
     { "key": "E4", "time": 6, "duration": 1.5 },
-    // Pause Beat 7.5
 
     { "key": "C#4", "time": 8.5, "duration": 0.5 },
     { "key": "D4", "time": 9, "duration": 0.5 },
