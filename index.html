@@ -23,6 +23,15 @@
             <input type="number" id="bpmInput" min="20" max="300" step="1" value="100">
             <span id="originalBpm"></span> <!-- Viser original BPM -->
         </div>
+        <!-- NY SEKSJON FOR LYDKONTROLL -->
+        <div class="control-row audio-controls">
+             <label for="volumeSlider">Volum:</label>
+             <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+             <label class="mute-label">
+                 <input type="checkbox" id="muteCheckbox"> Mute
+             </label>
+        </div>
+        <!-- SLUTT PÅ LYDKONTROLL -->
         <div class="control-row">
             <button id="playButton">Spill av</button>
             <span id="songInfo">Ingen sang valgt</span>
