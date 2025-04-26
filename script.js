@@ -1,24 +1,24 @@
 console.log("--- SCRIPT.JS START ---"); // LOG 1: Ser vi dette i det hele tatt?
 
 // === 1: GLOBALE VARIABLER OG KONSTANTER START ===
-let testVariable = "OK"; // Bare en enkel variabel
-console.log("--- Globale variable (test) satt ---", testVariable); // LOG 2
-
+// --- Faner ---
 const tabButtonPlay = document.getElementById('tabButtonPlay');
-// ... (resten av getElementById-kallene som før)
 const tabButtonRecord = document.getElementById('tabButtonRecord');
 const playArea = document.getElementById('playArea');
 const recordArea = document.getElementById('recordArea');
+
+// --- Avspillingsområde ---
 const songSelector = document.getElementById('songSelector');
 const bpmInputElement = document.getElementById('bpmInput');
 const originalBpmSpan = document.getElementById('originalBpm');
 const playButton = document.getElementById('playButton');
 const songInfoDiv = document.getElementById('songInfo');
 const gameCanvas = document.getElementById('gameCanvas');
-// *** VIKTIG: Hent context KUN hvis canvas finnes ***
-const gameCtx = gameCanvas ? gameCanvas.getContext('2d') : null;
+const gameCtx = gameCanvas ? gameCanvas.getContext('2d') : null; // Sikker henting
 const volumeSlider = document.getElementById('volumeSlider');
 const muteCheckbox = document.getElementById('muteCheckbox');
+
+// --- Innspillingsområde ---
 const recordTitleInput = document.getElementById('recordTitle');
 const recordArtistInput = document.getElementById('recordArtist');
 const recordTempoInput = document.getElementById('recordTempo');
@@ -34,28 +34,67 @@ const realtimeModeControls = document.getElementById('realtimeModeControls');
 const quantizeSelector = document.getElementById('quantizeSelector');
 const recordingStatusSpan = document.getElementById('recordingStatus');
 const recordPianoCanvas = document.getElementById('recordPianoCanvas');
-// *** VIKTIG: Hent context KUN hvis canvas finnes ***
-const recordPianoCtx = recordPianoCanvas ? recordPianoCanvas.getContext('2d') : null;
+const recordPianoCtx = recordPianoCanvas ? recordPianoCanvas.getContext('2d') : null; // Sikker henting
 const jsonOutputTextarea = document.getElementById('jsonOutput');
 const copyJsonButton = document.getElementById('copyJsonButton');
 
-console.log("--- Globale element-referanser hentet ---"); // LOG 3
-
 // --- Felles/Avspillingstilstand ---
-const availableSongs = { "twinkle_twinkle.json": "Twinkle Twinkle Little Star", "pink_panther_theme.json": "Pink Panther Theme" };
+const availableSongs = {
+    "twinkle_twinkle.json": "Twinkle Twinkle Little Star",
+    "pink_panther_theme.json": "Pink Panther Theme", // Behold denne hvis den funker
+    "odetojoy.json": "Ode to Joy (Beethoven)" // *** NY SANG LAGT TIL ***
+};
 const songsFolderPath = 'songs/';
-let currentSong = null; let currentPlaybackBPM = 100; let isPlaying = false; let animationFrameId = null; let playbackStartTime = 0; let activeKeys = new Set();
+let currentSong = null;
+let currentPlaybackBPM = 100;
+let isPlaying = false;
+let animationFrameId = null;
+let playbackStartTime = 0;
+let activeKeys = new Set();
+
 // --- Lydtilstand ---
-let audioContext = null; let masterGainNode = null; let isAudioInitialized = false; let currentVolume = 0.7; let isMuted = false; let scheduledAudioSources = [];
+let audioContext = null;
+let masterGainNode = null;
+let isAudioInitialized = false;
+let currentVolume = 0.7;
+let isMuted = false;
+let scheduledAudioSources = [];
+
 // --- Innspillingstilstand ---
-let isRecording = false; let recordingMode = 'realtime'; let recordingStartTime = 0; let recordedRawNotes = []; let recordedNotes = []; let currentStepTime = 0; let selectedStepNote = null;
+let isRecording = false;
+let recordingMode = 'realtime';
+let recordingStartTime = 0;
+let recordedRawNotes = [];
+let recordedNotes = [];
+let currentStepTime = 0;
+let selectedStepNote = null;
+
 // --- Piano Konstanter ---
 const keyInfo = [ { name: "C4", type: "white", xOffset: 0 }, { name: "C#4", type: "black", xOffset: 0.7 }, { name: "D4", type: "white", xOffset: 1 }, { name: "D#4", type: "black", xOffset: 1.7 }, { name: "E4", type: "white", xOffset: 2 }, { name: "F4", type: "white", xOffset: 3 }, { name: "F#4", type: "black", xOffset: 3.7 }, { name: "G4", type: "white", xOffset: 4 }, { name: "G#4", type: "black", xOffset: 4.7 }, { name: "A4", type: "white", xOffset: 5 }, { name: "A#4", type: "black", xOffset: 5.7 }, { name: "B4", type: "white", xOffset: 6 }, { name: "C5", type: "white", xOffset: 7 }, { name: "C#5", type: "black", xOffset: 7.7 }, { name: "D5", type: "white", xOffset: 8 }, { name: "D#5", type: "black", xOffset: 8.7 }, { name: "E5", type: "white", xOffset: 9 }, { name: "F5", type: "white", xOffset: 10 }, { name: "F#5", type: "black", xOffset: 10.7 }, { name: "G5", type: "white", xOffset: 11 }, { name: "G#5", type: "black", xOffset: 11.7 }, { name: "A5", type: "white", xOffset: 12 }, { name: "A#5", type: "black", xOffset: 12.7 }, { name: "B5", type: "white", xOffset: 13 }, { name: "C6", type: "white", xOffset: 14 } ];
-const PIANO_HEIGHT_PLAY = 120; const PIANO_HEIGHT_RECORD = 150; const blackKeyWidthRatio = 0.6; const blackKeyHeightRatio = 0.6; const keyMappingPlay = {}; const keyMappingRecord = {};
+const PIANO_HEIGHT_PLAY = 120;
+const PIANO_HEIGHT_RECORD = 150;
+const blackKeyWidthRatio = 0.6;
+const blackKeyHeightRatio = 0.6;
+const keyMappingPlay = {};
+const keyMappingRecord = {};
+
 // --- Spill Konstanter ---
-const PRE_ROLL_SECONDS = 3; const NOTE_FALL_SECONDS = 6; const KEY_HIGHLIGHT_COLOR = 'rgba(255, 80, 80, 0.75)'; const WHITE_NOTE_COLOR = '#3498db'; const BLACK_NOTE_COLOR = '#f1c40f'; const NOTE_BORDER_COLOR = 'rgba(0, 0, 0, 0.3)'; const NOTE_CORNER_RADIUS = 8; const KEY_NAME_FONT = '11px sans-serif'; const KEY_NAME_COLOR_WHITE = 'black'; const KEY_NAME_COLOR_BLACK = 'white'; const RECORD_KEY_HIGHLIGHT_COLOR = 'rgba(52, 152, 219, 0.8)';
+const PRE_ROLL_SECONDS = 3;
+const NOTE_FALL_SECONDS = 6;
+const KEY_HIGHLIGHT_COLOR = 'rgba(255, 80, 80, 0.75)';
+const WHITE_NOTE_COLOR = '#3498db';
+const BLACK_NOTE_COLOR = '#f1c40f';
+const NOTE_BORDER_COLOR = 'rgba(0, 0, 0, 0.3)';
+const NOTE_CORNER_RADIUS = 8;
+const KEY_NAME_FONT = '11px sans-serif';
+const KEY_NAME_COLOR_WHITE = 'black';
+const KEY_NAME_COLOR_BLACK = 'white';
+const RECORD_KEY_HIGHLIGHT_COLOR = 'rgba(52, 152, 219, 0.8)';
+
 // --- Lyd Konstanter ---
-const A4_FREQ = 440.0; const A4_MIDI_NUM = 69; const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const A4_FREQ = 440.0;
+const A4_MIDI_NUM = 69;
+const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 // === 1: GLOBALE VARIABLER OG KONSTANTER SLUTT ===
 
 
