@@ -192,7 +192,73 @@ function updateActiveKeys(currentBeat) { activeKeys.clear(); if (!currentSong ||
 
 
 // === 8: TEGNE FALLENDE NOTER START ===
-function drawFallingNotes(currentBeat) { if (!currentSong || !currentSong.notes || !gameCtx || !gameCanvas || Object.keys(keyMappingPlay).length === 0) return; const secondsPerBeat = 60 / currentPlaybackBPM; const fallHeight = gameCanvas.height - PIANO_HEIGHT_PLAY; if (fallHeight <= 0) return; const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS; const pixelsPerBeat = pixelsPerSecond * secondsPerBeat; const targetLineY = gameCanvas.height - PIANO_HEIGHT_PLAY; currentSong.notes.forEach(note => { const keyData = keyMappingPlay[note.key]; if (!keyData) return; const targetBeat = note.time; const beatsUntilHit = targetBeat - currentBeat; const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat); const notePixelHeight = Math.max(1, note.duration * pixelsPerBeat); const yTop = yBottom - notePixelHeight; const xPosition = keyData.x; const noteWidth = keyData.width; if (yTop < gameCanvas.height && yBottom > 0) { gameCtx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR; gameCtx.strokeStyle = NOTE_BORDER_COLOR; gameCtx.lineWidth = 1; gameCtx.beginPath(); if (gameCtx.roundRect) { gameCtx.roundRect(xPosition, yTop, noteWidth, notePixelHeight, NOTE_CORNER_RADIUS); } else { gameCtx.rect(xPosition, yTop, noteWidth, notePixelHeight); } gameCtx.fill(); gameCtx.stroke(); } }); }
+function drawFallingNotes(currentBeat) {
+    // Sjekk at nødvendige ting finnes FØR vi starter
+    if (!currentSong || !currentSong.notes || !gameCtx || !gameCanvas || Object.keys(keyMappingPlay).length === 0) {
+        // console.warn("drawFallingNotes: Avbryter - mangler data, context eller mapping."); // Kan aktiveres for debug
+        return;
+    }
+
+    const secondsPerBeat = 60 / currentPlaybackBPM;
+    const fallHeight = gameCanvas.height - PIANO_HEIGHT_PLAY;
+
+    // *** Sjekk om fallHeight er gyldig ***
+    if (fallHeight <= 0) {
+        console.error(`drawFallingNotes: Ugyldig fallHeight (${fallHeight}). gameCanvas.height=${gameCanvas.height}, PIANO_HEIGHT_PLAY=${PIANO_HEIGHT_PLAY}`);
+        return; // Kan ikke tegne hvis det ikke er plass
+    }
+
+    const pixelsPerSecond = fallHeight / NOTE_FALL_SECONDS;
+    const pixelsPerBeat = pixelsPerSecond * secondsPerBeat;
+    const targetLineY = gameCanvas.height - PIANO_HEIGHT_PLAY;
+
+    currentSong.notes.forEach(note => {
+        const keyData = keyMappingPlay[note.key];
+
+        // *** Logg hvis keyData mangler for en note ***
+        if (!keyData) {
+             console.warn(`drawFallingNotes: Missing keyData for note key "${note.key}"`);
+             return; // Hopp over denne noten hvis mapping mangler
+        }
+
+        // Beregn tider og posisjoner
+        const targetBeat = note.time;
+        const beatsUntilHit = targetBeat - currentBeat;
+        const yBottom = targetLineY - (beatsUntilHit * pixelsPerBeat);
+        const notePixelHeight = Math.max(1, note.duration * pixelsPerBeat); // Sørg for min. 1px høyde
+        const yTop = yBottom - notePixelHeight;
+        const xPosition = keyData.x;
+        const noteWidth = keyData.width;
+        const isVisible = yTop < gameCanvas.height && yBottom > 0; // Sjekk om noten er innenfor synlig område
+
+        // *** Logg data for ALLE noter som SKULLE VÆRT synlige (hvis Pink Panther) ***
+        if (currentSong.title && currentSong.title.includes("Pink Panther") && isVisible) {
+             console.log(`PP Note: ${note.key} | Time: ${note.time.toFixed(2)} | Dur: ${note.duration.toFixed(2)} | BPM: ${currentPlaybackBPM}`);
+             console.log(` -> Calc: beatsUntilHit=${beatsUntilHit.toFixed(2)} yBottom=${yBottom.toFixed(1)} h=${notePixelHeight.toFixed(1)} yTop=${yTop.toFixed(1)}`);
+             console.log(` -> Canvas H: ${gameCanvas.height}, Piano H: ${PIANO_HEIGHT_PLAY}, Fall H: ${fallHeight}`);
+             console.log(` -> Pixels/Beat: ${pixelsPerBeat.toFixed(2)}`);
+        }
+
+        // Tegn noten hvis den er synlig
+        if (isVisible) {
+            gameCtx.fillStyle = (keyData.type === 'white') ? WHITE_NOTE_COLOR : BLACK_NOTE_COLOR;
+            gameCtx.strokeStyle = NOTE_BORDER_COLOR;
+            gameCtx.lineWidth = 1;
+            gameCtx.beginPath();
+
+            // *** Bruk vanlig rect for testing (kommenter ut roundRect) ***
+             gameCtx.rect(xPosition, yTop, noteWidth, notePixelHeight);
+            // if (gameCtx.roundRect) {
+            //      gameCtx.roundRect(xPosition, yTop, noteWidth, notePixelHeight, NOTE_CORNER_RADIUS);
+            // } else {
+            //      gameCtx.rect(xPosition, yTop, noteWidth, notePixelHeight);
+            // }
+            gameCtx.fill();
+            gameCtx.stroke();
+            // console.log(` -> Tegnet med fillStyle: ${gameCtx.fillStyle}`); // Valgfri debug-logging
+        }
+    });
+}
 // === 8: TEGNE FALLENDE NOTER SLUTT ===
 
 
